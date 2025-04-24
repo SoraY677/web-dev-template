@@ -1,0 +1,78 @@
+# 
+# ワークフローディスパッチからリリースできるワークフロー
+#
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: "version tag"
+        required: true
+        default: "v0.0.0"
+
+permissions:
+  pull-requests: write
+  contents: write
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref_name }}
+
+      - name: Configure git
+        run: |
+          git config user.name "actions-bot"
+          git config user.email "actions@github.com"
+
+      - name: Create and push tag
+        run: |
+          git tag ${{ github.event.inputs.tag_name }}
+          git push origin ${{ github.event.inputs.tag_name }}
+
+  release:
+    needs: tag
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure git
+        run: |
+          git config user.name "actions-bot"
+          git config user.email "actions@github.com"
+
+      - name: Merge
+        run: |
+          git checkout release
+          git reset --hard origin/${{ github.ref_name }}
+          git push --force origin release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  note:
+    needs: release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build
+        run: echo ${{ github.sha }} > Release.txt
+
+      - name: Test
+        run: cat Release.txt
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            Release.txt
+          tag_name: ${{ github.event.inputs.tag_name }}
