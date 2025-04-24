@@ -1,6 +1,6 @@
 <div align=center>
 
-# $$テンプレート
+# ウェブ開発テンプレート
 
 </div>
 
@@ -27,4 +27,4 @@ yarn lint:fix # 矯正
 
 ### ドキュメント
 
-- [コーディングルール](doc\develop\coding-rule.md)
+- [コーディングルール](./doc/develop/coding-rule.md)
