@@ -1,0 +1,50 @@
+name: Bug Report
+description: Issue/bug report
+title: "[🐛BUG]: "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: detail
+    attributes:
+      label: bug detail
+      placeholder: write about
+    validations:
+      required: true
+  - type: dropdown
+    id: device
+    attributes:
+      label: Device Type
+      multiple: true
+      options:
+        - Windows
+        - Mac
+        - Android
+        - iPhone
+        - iPad
+        - Other
+      default: 0
+    validations:
+      required: true
+  - type: input
+    id: os-version
+    attributes:
+      label: os version
+      placeholder: ios14.3
+  - type: dropdown
+    id: browsers
+    attributes:
+      label: Brower Type
+      multiple: true
+      options:
+        - Firefox
+        - Chrome
+        - Safari
+        - Microsoft Edge
+        - Other
+      default: 0
+    validations:
+      required: true
+  - type: textarea
+    id: other
+    attributes:
+      label: Other Info
