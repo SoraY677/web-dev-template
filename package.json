@@ -10,6 +10,9 @@
     "setup:root-env": "npx tsx ./_tool/Copy.tool.ts -s .env.template -d .env",
     "lint": "eslint \"**/*\"",
     "lint:fix": "eslint --fix \"**/*\"",
+    "dev": "echo todo:dev",
+    "build": "echo todo:build",
+    "test": "echo todo:test",
     "prepare:husky": "husky"
   },
   "husky": {
