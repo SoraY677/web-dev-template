@@ -10,6 +10,10 @@ type ParameterType = {
   dst?: string
 }
 
+/**
+ * ファイルコピー
+ * @param param ParameterType
+ */
 const copy = ({src, dst}: ParameterType) => {
   if (!src || !dst) throw 'paramter needed'
   if (fs.existsSync(dst)) throw 'file exists'
