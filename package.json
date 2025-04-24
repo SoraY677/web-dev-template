@@ -4,6 +4,7 @@
   "repository": "git@github.com:SoraY677/web-dev-template.git",
   "author": "soray677 <soray677@outlook.com>",
   "license": "MIT",
+  "workspaces":[],
   "scripts": {
     "lint": "eslint \"**/*\"",
     "lint:fix": "eslint --fix \"**/*\"",
