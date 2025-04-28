@@ -15,14 +15,6 @@
     "test": "echo todo:test",
     "prepare:husky": "husky"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx,json,css,scss}": "yarn lint"
-  },
   "devDependencies": {
     "@eslint/js": "^9.25.1",
     "@types/node": "^22.14.1",
