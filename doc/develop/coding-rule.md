@@ -15,7 +15,7 @@
 |      クラス名      |     パスカルケース     |       UserService       |                          |
 | インターフェース名 |     パスカルケース     |         UserIF          |        末尾に IF         |
 |         型         |     パスカルケース     |        UserType         |       末尾に Type        |
-|        enum        |                        |        UserEnum         |       末尾に Enum        |
+|        enum        |     パスカルケース       |        UserEnum         |       末尾に Enum        |
 |  enum のメンバー   | アッパースネークケース |          USER           |                          |
 |  コンポーネント名  |     パスカルケース     |        UserCard         |                          |
 |     CSS(SCSS)      |      ケバブケース      |        user-card        |                          |
