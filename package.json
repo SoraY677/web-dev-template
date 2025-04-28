@@ -4,15 +4,11 @@
   "repository": "git@github.com:SoraY677/web-dev-template.git",
   "author": "soray677 <soray677@outlook.com>",
   "license": "MIT",
-  "workspaces": [],
   "scripts": {
     "setup": "run-s setup:*",
-    "setup:root-env": "npx tsx ./_tool/Copy.tool.ts -s .env.template -d .env",
+    "setup:root-env": "npx tsx ./_tool/Copy.tool.ts -s .env.template -d .env &",
     "lint": "eslint \"**/*\"",
     "lint:fix": "eslint --fix \"**/*\"",
-    "dev": "echo todo:dev",
-    "build": "echo todo:build",
-    "test": "echo todo:test",
     "prepare:husky": "husky"
   },
   "devDependencies": {
