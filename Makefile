@@ -45,5 +45,5 @@ setup-server:
 
 .PHONY: setup
 setup:
-	docker run -i -v .:/app -w /app --rm node:22 bash -c "yarn setup"
+	docker run -i -v .:/app -w /app --rm node:22 bash -c "yarn && yarn setup"
 
