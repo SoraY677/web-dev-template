@@ -1,1 +1,1 @@
-make exec COMMAND="yarn & yarn lint"
+make lint
