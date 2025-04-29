@@ -8,7 +8,7 @@ endif
 #
 .PHONY: exec
 exec:
-	docker run -i -v $(ROOT_ABSOLUTE_DIR):/app -w /app --rm node:22 bash -c "$(COMMAND)"
+	docker compose exec root bash -c "$(COMMAND)"
 
 #
 # Main
@@ -45,5 +45,5 @@ setup-server:
 
 .PHONY: setup
 setup:
-	make exec COMMAND="yarn setup"
+	docker run -i -v .:/app -w /app --rm node:22 bash -c "yarn setup"
 

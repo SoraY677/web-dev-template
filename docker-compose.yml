@@ -1,16 +1,16 @@
 services:
-    app:
+    root:
       image: node:22
       working_dir: /app
       volumes:
         - ./:/app
-      command: yarn setup
+      tty: true
 
     server:
       image: node:22
       working_dir: /server
       depends_on: 
-        - app
+        - root
       tty: true
       volumes:
         - ./:/server
@@ -21,7 +21,7 @@ services:
       image: node:22
       working_dir: /client
       depends_on: 
-        - app
+        - root
       tty: true
       volumes:
         - ./:/client
