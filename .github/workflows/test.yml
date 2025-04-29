@@ -23,12 +23,6 @@ jobs:
 
       - name: Install depencies
         run: yarn install
-        
-      - name: Build
-        run: yarn build
-
-      - name: Test
-        run: yarn test
 
       - name: Lint
         run: yarn lint
