@@ -13,20 +13,23 @@
 make setup
 ```
 
-### 2. `.env`ファイルにデータ書き込み
+### 2. docker-compose.yml を調整
 
-### 3. 任意コマンド実行
+### 3. サーバー起動
 
-以下、必要な選んで実行
+README.md からサーバ起動
+
+### 4. `.env`ファイルにデータ書き込み
+
+### 5. 任意コマンド実行
 
 ```sh
-# クライアント
-make setup-client
-# サーバ
-make setup-server
+# 例
+make setup-vite PROJECT_NAME=client
+make setup-vite PROJECT_NAME=server
 ```
 
-### 4. 各環境のpackage.jsonのスクリプトに追加設定
+### 6. 各環境のpackage.jsonのスクリプトに追加設定
 
 |コマンド|概要|
 |:---:|:---:|
@@ -35,10 +38,10 @@ make setup-server
 |build|本番データビルド|
 |start|本番環境起動|
 
-### 5. docker-compose.yml を調整
+### 6. docker-compose.yml を調整
 
 必要なコンテナとコマンドを調整
 
-## サーバーを起動
+## サーバーを再起動
 
-README.md からサーバ起動
+README.md からサーバ再起動
