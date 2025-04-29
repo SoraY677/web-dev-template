@@ -1,9 +1,14 @@
+ifneq ("$(wildcard .env)", "")
+	include .env
+	export
+endif
+
 #
 # Base
 #
 .PHONY: exec
 exec:
-	docker run -i -v $(abspath .):/app -w /app --rm node:22 bash -c "$(COMMAND)"
+	docker run -i -v $(ROOT_ABSOLUTE_DIR):/app -w /app --rm node:22 bash -c "$(COMMAND)"
 
 #
 # Main
