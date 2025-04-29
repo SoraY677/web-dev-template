@@ -13,7 +13,6 @@ services:
         - root
       tty: true
       volumes:
-        - ./:/server
         - ./tsconfig.json:/tsconfig.json:ro
       # command: yarn dev
 
@@ -24,6 +23,5 @@ services:
         - root
       tty: true
       volumes:
-        - ./:/client
         - ./tsconfig.json:/tsconfig.json:ro
       # command: yarn dev
