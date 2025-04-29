@@ -1,0 +1,29 @@
+services:
+    app:
+      image: node:22
+      working_dir: /app
+      volumes:
+        - ./:/app
+      command: yarn setup
+
+    server:
+      image: node:22
+      working_dir: /server
+      depends_on: 
+        - app
+      tty: true
+      volumes:
+        - ./:/server
+        - ./tsconfig.json:/tsconfig.json:ro
+      # command: yarn dev
+
+    client:
+      image: node:22
+      working_dir: /client
+      depends_on: 
+        - app
+      tty: true
+      volumes:
+        - ./:/client
+        - ./tsconfig.json:/tsconfig.json:ro
+      # command: yarn dev
