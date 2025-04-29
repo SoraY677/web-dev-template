@@ -13,16 +13,19 @@
 
 ### コマンド
 
+- [セットアップ方法](./doc/develop/setup.md)
+
 ```sh
-# install depencies
-yarn
+make start # 起動
+make stop # 停止
+make restart # 再起動
 
-# setup
-yarn setup
+# リント
+make lint # チェック
+make lint-fix # 矯正
 
-# lint
-yarn lint     # チェック
-yarn lint:fix # 矯正
+# yarnコマンド実行
+make exec COMMAND=${コマンド}
 ```
 
 ### ドキュメント
