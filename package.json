@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "setup": "run-s setup:*",
-    "setup:root-env": "npx tsx ./_tool/Copy.tool.ts -s .env.template -d .env || true",
+    "setup:root-env": "tsx ./_tool/Copy.tool.ts -s .env.template -d .env || true",
     "lint": "eslint \"**/*\"",
     "lint:fix": "eslint --fix \"**/*\"",
     "prepare:husky": "husky"
