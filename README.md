@@ -25,7 +25,7 @@ make lint # チェック
 make lint-fix # 矯正
 
 # yarnコマンド実行
-make exec COMMAND=${コマンド}
+make exec COMMAND=${コマンド} CONTAINER=${コンテナ}
 ```
 
 ### ドキュメント
