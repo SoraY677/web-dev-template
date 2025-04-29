@@ -3,7 +3,7 @@
 #
 .PHONY: exec
 exec:
-	docker run -it -v .:/app -w /app --rm node:22 bash -c "yarn && ${COMMAND}"
+	docker run -i -v .:/app -w /app --rm node:22 bash -c "yarn && ${COMMAND}"
 
 #
 # Main
