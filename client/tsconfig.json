@@ -1,7 +1,7 @@
 {
-  "files": [],
+  "extends": ["@vue/tsconfig/tsconfig.dom.json"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "vite.config.ts" ],
   "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
+    { "path": "../tsconfig.json" }
   ]
 }
