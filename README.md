@@ -9,25 +9,85 @@
 ### 環境
 
 - Docker version 27.1.1, build 631258
-- node v20
 
 ### コマンド
 
-- [セットアップ方法](./doc/develop/setup.md)
+#### 立ち上げ
+
+- 通常起動
 
 ```sh
-make start # 起動
-make stop # 停止
-make restart # 再起動
-
-# リント
-make lint # チェック
-make lint-fix # 矯正
-
-# yarnコマンド実行
-make exec COMMAND=${コマンド} CONTAINER=${コンテナ}
+docker compose up -d
 ```
 
-### ドキュメント
+- ビルド付起動(node_modulesの追加時等)
+
+```sh
+docker compose up -d --build
+```
+
+- 停止
+
+```sh
+docker compose down
+```
+
+- 再起動
+```sh
+docker compose restart
+```
+
+
+#### セットアップ
+
+- 一括
+```sh
+docker compose exec root yarn setup 
+```
+
+#### ビルド
+
+- 一括
+```sh
+docker compose exec root yarn build 
+```
+
+- クライアント
+```sh
+docker compose exec client yarn build 
+```
+
+- サーバ
+```sh
+docker compose exec server yarn build 
+```
+
+- インフラ
+```sh
+docker compose exec infra yarn build 
+```
+
+#### 静的検証
+
+- リントチェック
+
+```sh
+docker compose exec root yarn lint 
+```
+
+- リント矯正
+```sh
+docker compose exec root yarn lint:fix
+```
+
+### 各サービスエンドポイント
+
+|種別|パス|
+|:---:|:----|
+|クライアント|`http://localhost/`|
+|サーバ|`http://localhost:8000/`|
+
+### ドキュメント一覧
 
 - [コーディングルール](./doc/develop/coding-rule.md)
+- [その他Tips](https://github.com/SoraY677/web-dev-template/wiki)

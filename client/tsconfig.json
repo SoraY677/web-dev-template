@@ -1,7 +1,23 @@
 {
-  "extends": ["@vue/tsconfig/tsconfig.dom.json"],
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "vite.config.ts" ],
-  "references": [
-    { "path": "../tsconfig.json" }
-  ]
+  "extends": ["../tsconfig.json", "@vue/tsconfig/tsconfig.dom.json"],
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "erasableSyntaxOnly": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true,
+    "paths": {
+      "@/*": ["./src/*"],
+      "@assets/*": ["./src/assets/*"],
+      "@components/*": ["./src/components/*"],
+      "@types/*": ["./src/types/*"]
+    },
+    "baseUrl": ".",
+    
+  },
+  "include": ["src/**/*.ts", "src/**/*.vue", "vite.config.ts"],
 }
