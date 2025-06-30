@@ -12,94 +12,51 @@
 
 ### コマンド
 
-#### 立ち上げ
+[コマンド可変引数]
 
-- 通常起動
+- `{service}`: 各サービスの指定
+  - `client`: クライアント
+  - `server`: サーバー
+  - `infra`: インフラ
 
-```sh
-docker compose up -d
-```
-
-- ビルド付起動(node_modulesの追加時等)
-
-```sh
-docker compose up -d --build
-```
-
-- 停止
+#### 起動・停止
 
 ```sh
-docker compose down
-```
+docker compose up -d          # 通常起動
+docker compose up -d --build  # ビルド付起動(node_modulesの追加時等)
 
-- 再起動
-```sh
-docker compose restart
-```
+docker compose down           # 停止
 
+docker compose restart        # 再起動
+```
 
 #### セットアップ
 
-- 一括
 ```sh
-docker compose exec root yarn setup 
+docker compose exec root yarn setup # 一括
+docker compose exec {service} yarn setup # 各サービスごと
 ```
 
 #### ビルド
 
-- 一括
 ```sh
-docker compose exec root yarn build 
-```
-
-- クライアント
-```sh
-docker compose exec client yarn build 
-```
-
-- サーバ
-```sh
-docker compose exec server yarn build 
-```
-
-- インフラ
-```sh
-docker compose exec infra yarn build 
+docker compose exec root yarn build      # 一括
+docker compose exec {service} yarn build # 各サービスごと
 ```
 
 #### テスト
 
 - 一括
 ```sh
-docker compose exec root yarn test
-```
-
-- クライアント
-```sh
-docker compose exec client yarn test
-```
-
-- サーバ
-```sh
-docker compose exec server yarn test
-```
-
-- インフラ
-```sh
-docker compose exec infra yarn test
+docker compose exec root yarn test      # 一括
+docker compose exec {service} yarn test # 各サービスごと
 ```
 
 #### リント
 
-- リントチェック
-
 ```sh
-docker compose exec root yarn lint 
-```
-
-- リント矯正
-```sh
-docker compose exec root yarn lint:fix
+docker compose exec root yarn lint      # チェックのみ
+docker compose exec root yarn lint:fix  # 矯正含む
 ```
 
 ### 各サービスエンドポイント
