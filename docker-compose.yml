@@ -10,6 +10,21 @@ services:
         - .env
       tty: true
 
+    infra:
+      build:
+        context: './infra'
+      working_dir: /infra
+      volumes:
+        - ./infra:/infra
+        - ./common:/common
+        - /infra/node_modules
+        - ./tsconfig.json:/tsconfig.json:ro
+      env_file:
+        .env
+      command: yarn watch
+      depends_on:
+        - root
+
     server:
       build:
         context: './server'

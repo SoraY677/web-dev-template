@@ -8,6 +8,7 @@
     "setup": "run-s setup:*",
     "setup:client": "yarn --cwd client 'install'",
     "setup:server": "yarn --cwd server 'install'",
+    "setup:infra": "yarn --cwd infra 'install'",
     "lint": "eslint \"**/*\"",
     "lint:fix": "eslint --fix \"**/*\""
   },
