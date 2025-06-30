@@ -1,6 +1,7 @@
 {
   "name": "server",
   "type": "module",
+  "license": "MIT",
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "tsc",

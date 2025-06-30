@@ -1,6 +1,7 @@
 {
   "name": "infra",
   "version": "0.1.0",
+  "license": "MIT",
   "bin": {
     "main": "dist/bin/main.js"
   },
