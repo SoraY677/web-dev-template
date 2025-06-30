@@ -1,15 +1,10 @@
 import globals from 'globals'
-import tseslint from 'typescript-eslint'
-import { defineConfig } from 'eslint/config'
-import unicorn from 'eslint-plugin-unicorn';
-
-const targetExt = 'ts,tsx,vue'
-const targetFiles = `**/*.{${targetExt}}`
+import { defineConfig, globalIgnores  } from 'eslint/config'
+import tsParser from "@typescript-eslint/parser";
 
 export default defineConfig([
-  // ファイル内容制約
   {
-    files: [targetFiles],
+    files: ['**/*.{ts,tsx}'],
     rules: {
       semi: ['error', 'never'],
       'semi-spacing': ['error', {after: true, before: false}],
@@ -41,14 +36,16 @@ export default defineConfig([
       'keyword-spacing': ["error", {"before": true, "after": true }],
       'space-infix-ops': 'error',
     },
-    languageOptions: { globals: globals.browser },
-  },
-  // ファイル名の制約
-  {
-    files: [targetFiles],
-    plugins: {
-      unicorn,
+    languageOptions: { 
+      parser: tsParser,
+      globals: {
+        ...globals.node,
+        ...globals.jest,
+      },
     },
   },
-  tseslint.configs.recommended,
+  globalIgnores([
+		"**/node_modules/**/*", 
+		"**/dist/**/*", 
+	]),
 ])
