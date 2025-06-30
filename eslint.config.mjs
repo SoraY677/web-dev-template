@@ -49,16 +49,6 @@ export default defineConfig([
     plugins: {
       unicorn,
     },
-    rules: {
-      'unicorn/filename-case': [
-        'error',
-        {
-          cases: {
-            pascalCase: true
-          },
-        },
-      ],
-    },
   },
   tseslint.configs.recommended,
 ])

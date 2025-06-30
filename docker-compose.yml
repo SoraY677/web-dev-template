@@ -1,29 +1,45 @@
 services:
     root:
-      image: node:22
+      build:
+        context: .
       working_dir: /app
       volumes:
         - ./:/app
+        - /app/node_modules
+      env_file:
+        - .env
       tty: true
 
-    # server:
-    #   image: node:22
-    #   working_dir: /server
-    #   depends_on: 
-    #     - root
-    #   tty: true
-    #   volumes:
-    #     - ./:/server
-    #     - ./tsconfig.json:/tsconfig.json:ro
-    #   # command: yarn dev
+    server:
+      build:
+        context: './server'
+      working_dir: /server
+      volumes:
+        - ./server:/server
+        - ./common:/common
+        - /server/node_modules
+        - ./tsconfig.json:/tsconfig.json:ro
+      ports:
+        - "${SERVER_PORT}:${SERVER_PORT}"
+      env_file:
+        - .env
+      command: yarn dev
+      depends_on: 
+        - root
 
-    # client:
-    #   image: node:22
-    #   working_dir: /client
-    #   depends_on: 
-    #     - root
-    #   tty: true
-    #   volumes:
-    #     - ./:/client
-    #     - ./tsconfig.json:/tsconfig.json:ro
-    #   # command: yarn dev
+    client:
+      build:
+        context: './client'
+      working_dir: /client
+      depends_on: 
+        - server
+      volumes:
+        - ./client:/client
+        - /client/node_modules
+        - ./common:/common
+        - ./tsconfig.json:/tsconfig.json:ro
+      ports:
+        - "${CLIENT_PORT}:${CLIENT_PORT}"
+      env_file:
+        - .env
+      command: yarn dev
