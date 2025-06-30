@@ -1,8 +1,12 @@
 import globals from 'globals'
 import { defineConfig, globalIgnores  } from 'eslint/config'
 import tsParser from "@typescript-eslint/parser";
+import pluginVue from 'eslint-plugin-vue'
+import vueParser from 'vue-eslint-parser'
+import pluginImport from 'eslint-plugin-import'
 
 export default defineConfig([
+  /* TypeScript */
   {
     files: ['**/*.{ts,tsx}'],
     rules: {
@@ -44,6 +48,35 @@ export default defineConfig([
       },
     },
   },
+  /* Vue */
+  {
+    files: ['**/*.{vue}'],
+    plugins: {
+      vue: pluginVue,
+      import: pluginImport,
+    },
+    languageOptions: {
+      parser: vueParser,
+      globals: {
+        ...globals.node
+      },
+      parserOptions: {
+        parser: tsParser,
+        sourceType: 'module',
+        extraFileExtensions: ['.vue'],
+        project: './tsconfig.json',
+      },
+    },
+    rules: {
+      'vue/multi-word-component-names': 'off',
+      'import/order': ['error', {
+        groups: ['builtin', 'external', 'internal', ['parent', 'sibling', 'index']],
+        'newlines-between': 'always',
+        alphabetize: { order: 'asc', caseInsensitive: true },
+      }],
+    },
+  },
+
   globalIgnores([
 		"**/node_modules/**/*", 
 		"**/dist/**/*", 
