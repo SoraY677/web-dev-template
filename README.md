@@ -33,7 +33,7 @@ docker compose restart        # 再起動
 #### セットアップ
 
 ```sh
-docker compose exec root yarn setup # 一括
+docker compose exec root yarn setup      # 一括
 docker compose exec {service} yarn setup # 各サービスごと
 ```
 
