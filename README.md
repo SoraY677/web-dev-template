@@ -106,8 +106,8 @@ docker compose exec root yarn lint:fix
 
 |種別|パス|
 |:---:|:----|
-|クライアント|`http://localhost/`|
-|サーバ|`http://localhost:8000/`|
+|クライアント|[`http://localhost/`](http://localhost/)|
+|サーバ|[`http://localhost:8000/`](http://localhost:8000/)|
 
 ### ドキュメント一覧
 
