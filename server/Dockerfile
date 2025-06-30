@@ -1,7 +1,6 @@
 FROM node:alpine
 
 COPY . /server
-COPY ../package.json /
 WORKDIR /server
 
 RUN yarn install
