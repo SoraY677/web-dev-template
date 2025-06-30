@@ -67,7 +67,29 @@ docker compose exec server yarn build
 docker compose exec infra yarn build 
 ```
 
-#### 静的検証
+#### テスト
+
+- 一括
+```sh
+docker compose exec root yarn test
+```
+
+- クライアント
+```sh
+docker compose exec client yarn test
+```
+
+- サーバ
+```sh
+docker compose exec server yarn test
+```
+
+- インフラ
+```sh
+docker compose exec infra yarn test
+```
+
+#### リント
 
 - リントチェック
 

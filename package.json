@@ -13,6 +13,10 @@
     "build:client": "yarn --cwd client 'build'",
     "build:server": "yarn --cwd server 'build'",
     "build:infra": "yarn --cwd infra 'build'",
+    "test": "run-s test:*",
+    "test:client": "yarn --cwd client 'test'",
+    "test:server": "yarn --cwd server 'test'",
+    "test:infra": "yarn --cwd infra 'test'",
     "lint": "eslint \"**/*\"",
     "lint:fix": "eslint --fix \"**/*\""
   },

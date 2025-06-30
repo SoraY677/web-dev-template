@@ -21,8 +21,8 @@ jobs:
         with:
           node-version: v20.11.0
 
-      - name: Install depencies
-        run: yarn install
+      - name: Init
+        run: yarn install && yarn setup
 
       - name: Lint
         run: yarn lint
