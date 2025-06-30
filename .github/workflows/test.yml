@@ -19,7 +19,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3.1.1
         with:
-          node-version: v20.11.0
+          node-version: v22.17.0	
 
       - name: Init
         run: yarn install && yarn setup
