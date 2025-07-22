@@ -1,5 +1,5 @@
 {
-	"vue template": {
+	"vue-template": {
 		"scope": "vue",
 		"prefix": "/vue-template",
 		"body": [
@@ -9,7 +9,7 @@
 			"<script setup lang=\"ts\">",
 			"</script>",
       "",
-			"<style scoped>",
+			"<style scoped lang=\"scss\">",
 			"</style>"
 		],
 	}
