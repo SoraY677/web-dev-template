@@ -112,3 +112,15 @@ export const useCounterStore = defineStore('counter', {
 ### テスト
 
 Todo
+
+### 型定義
+
+- `src/types/` 配下に必要な型定義ファイルを必要に応じて定義
+  - ファイル名は`xxxType.ts`
+  - 型名は`xxxType`
+  - 定義してよいのは`Enum`/`Type`
+- `src/types/global` 配下にはグローバルな型定義(`xxx.d.ts`)等を定義
+
+### ユースケース
+
+- `src/usecases/` 配下に必要な関数ファイルを必要に応じて定義
