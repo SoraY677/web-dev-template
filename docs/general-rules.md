@@ -16,6 +16,7 @@
 | 型エイリアス名   | PascalCase + `Type`  | `UserInfoType`, `ApiResponseType` |
 | インターフェース名 | PascalCase + `Interface` | `UserInterface`, `ProductInterface` |
 | URLパス         | kebab-case           | `/user-profile`, `/api-client`    |
+| コンポーネント名 | PascalCase           | `UserCard`, `LoginForm`           | 
 
 
 ## コメント
