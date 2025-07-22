@@ -111,7 +111,9 @@ export const useCounterStore = defineStore('counter', {
 
 ### テスト
 
-Todo
+- ライブラリ: [Vitest](https://vitest.dev/)
+- `src/tests/` 配下に必要な型定義ファイルを必要に応じて定義
+  - ファイル名は`xxx.test.ts`
 
 ### 型定義
 
