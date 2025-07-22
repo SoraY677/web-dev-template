@@ -22,34 +22,36 @@
 #### 起動・停止
 
 ```sh
-docker compose up -d          # 通常起動
-docker compose up -d --build  # ビルド付起動(node_modulesの追加時等)
-
-docker compose down           # 停止
+docker compose up -d          # 起動
+docker compose up -d --build  # ビルド起動
 
 docker compose restart        # 再起動
+
+docker compose down           # 停止
+```
+
+#### コンテナログイン
+
+```sh
+docker compose exec root sh
 ```
 
 #### セットアップ
 
 ```sh
-docker compose exec root yarn setup      # 一括
-docker compose exec {service} yarn setup # 各サービスごと
+docker compose exec root yarn setup
 ```
 
 #### ビルド
 
 ```sh
-docker compose exec root yarn build      # 一括
-docker compose exec {service} yarn build # 各サービスごと
+docker compose exec root yarn build
 ```
 
 #### テスト
 
-- 一括
 ```sh
-docker compose exec root yarn test      # 一括
-docker compose exec {service} yarn test # 各サービスごと
+docker compose exec root yarn test
 ```
 
 #### リント
@@ -57,7 +59,7 @@ docker compose exec {service} yarn test # 各サービスごと
 ```sh
 docker compose exec root yarn lint      # チェックのみ
 docker compose exec root yarn lint:fix  # 矯正含む
-```
+``
 
 ### 各サービスエンドポイント
 
