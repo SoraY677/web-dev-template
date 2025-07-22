@@ -6,55 +6,10 @@ services:
       volumes:
         - ./:/app
         - /app/node_modules
-      env_file:
-        - .env
-      tty: true
-
-    infra:
-      build:
-        context: './infra'
-      working_dir: /infra
-      volumes:
-        - ./infra:/infra
-        - ./common:/common
-        - /infra/node_modules
-        - ./tsconfig.json:/tsconfig.json:ro
-      env_file:
-        .env
-      command: yarn watch
-      depends_on:
-        - root
-
-    server:
-      build:
-        context: './server'
-      working_dir: /server
-      volumes:
-        - ./server:/server
-        - ./common:/common
-        - /server/node_modules
-        - ./tsconfig.json:/tsconfig.json:ro
       ports:
+        - "${CLIENT_PORT}:${CLIENT_PORT}"
         - "${SERVER_PORT}:${SERVER_PORT}"
       env_file:
         - .env
       command: yarn dev
-      depends_on: 
-        - root
-
-    client:
-      build:
-        context: './client'
-      working_dir: /client
-      depends_on: 
-        - server
-      volumes:
-        - ./client:/client
-        - /client/node_modules
-        - ./common:/common
-        - ./tsconfig.json:/tsconfig.json:ro
-      ports:
-        - "${CLIENT_PORT}:${CLIENT_PORT}"
-      env_file:
-        - .env
-      command: yarn dev
+      tty: true

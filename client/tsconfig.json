@@ -14,7 +14,11 @@
       "@/*": ["./src/*"],
       "@assets/*": ["./src/assets/*"],
       "@components/*": ["./src/components/*"],
-      "@types/*": ["./src/types/*"]
+      "@composables/*": ["./src/composables/*"],
+      "@configs/*": ["./src/configs/*"],
+      "@tests/*": ["./src/tests/*"],
+      "@types/*": ["./src/types/*"],
+      "@usecases/*": ["./src/usecases/*"]
     },
     "baseUrl": ".",
     
