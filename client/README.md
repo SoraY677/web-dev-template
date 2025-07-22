@@ -26,8 +26,8 @@ yarn test
     - `04-templates`
     - `05-pages`
   - `composables/`: VueComposable依存のラップ関数置き場
-    - `router`: VueRouter依存
-    - `state`: Vue状態遷移ライブラリ(Pinia依存)
+    - `router/`: VueRouter依存
+    - `state/`: Vue状態遷移ライブラリ(Pinia依存)
   - `configs/`: 設定値などの定義
   - `tests/`: テスト(Vitest)のファイル置き場
   - `types/`: 型
@@ -71,9 +71,43 @@ yarn test
 |`04-templates`|TEMPLATE（テンプレート）|`03`|✅|
 |`05-pages`|PAGE(ページ)|`03`,`04`|✅|
 
+### ルーティング
+
+- ライブラリ: [Vue-Router](https://v3.router.vuejs.org/ja/guide/)
+- `src/composables/router/RouterComponent.ts`および設定ファイルでルーティング設定を追加することでパス追加可能
+
 ### 状態管理
 
-Todo
+- ライブラリ: [Pinia](https://pinia.vuejs.org/)
+- `src/composables/state/` 配下に必要な状態管理ファイルを必要に応じて定義
+  - ファイル名は`xxxState.ts`
+  - 関数名は`useXXXStore`
+
+
+```typescript:CounterState.ts
+import { defineStore } from 'pinia'
+
+interface CounterState {
+  count: number;
+}
+
+export const useCounterStore = defineStore('counter', {
+  state: (): CounterState => ({
+    count: 0,
+  }),
+  actions: {
+    increment() {
+      this.count++
+    },
+    decrement() {
+      this.count--
+    },
+    reset() {
+      this.count = 0
+    },
+  },
+})
+```
 
 ### テスト
 

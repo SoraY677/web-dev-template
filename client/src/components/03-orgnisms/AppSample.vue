@@ -2,11 +2,19 @@
   <div class="sample-main">
     <AppIcon/>
     <p>RAXSY APPS</p>
+    <p>
+      <button @click="counterState.increment">
+        count: {{ counterState.count }}
+      </button>
+    </p>
   </div>
 </template>
 
 <script setup lang="ts">
+import { useCounterStore } from '@/composables/state/CounterState';
 import AppIcon from '../02-molecules/AppIcon.vue';
+
+const counterState = useCounterStore()
 
 </script>
 
