@@ -2,11 +2,10 @@
   <div class="sample-main">
     <AppIcon/>
     <p>RAXSY APPS</p>
-    <p>
-      <button @click="counterState.increment">
-        count: {{ counterState.count }}
-      </button>
-    </p>
+    <v-btn class="text-black" :onclick="counterState.increment">
+      <v-icon icon="mdi-thumb-up" />
+      count: {{ counterState.count }}
+    </v-btn>
   </div>
 </template>
 
