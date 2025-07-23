@@ -11,6 +11,7 @@
 <script setup lang="ts">
 import CommonTemplate from '@components/04-templates/CommonTemplate.vue';
 import AppSample from '@components/03-orgnisms/AppSample.vue';
+
 </script>
 
 <style scoped lang="scss">

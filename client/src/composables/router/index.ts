@@ -3,6 +3,7 @@ import type { RouteRecordRaw } from "vue-router"
 import { createRouter, createWebHistory } from 'vue-router'
 import { MetaConfigs } from "@/configs/routes-config/MetaConfigs"
 import { RouteComponentRecord } from "@composables/router/RouteComponents"
+import { useRoute as _useRoute } from "vue-router"
 
 const generateRouteRecordRaw = (path: UrlPathConfigs): RouteRecordRaw => ({
     path: path,
@@ -17,3 +18,9 @@ export const router = createRouter({
   routes: routeRecordRaws,
 })
 
+export const useRoute = () => {
+  const route = _useRoute()
+  return {
+    getCurrentPath: () => route.path
+  }
+}

@@ -11,5 +11,5 @@ serve({
   fetch: app.fetch,
   port: Number(process.env.SERVER_PORT ?? 8000),
 }, (info) => {
-  console.log(`Server is running on http://localhost:${info.port}`)
+  console.info(`Server is running on http://localhost:${info.port}`)
 })

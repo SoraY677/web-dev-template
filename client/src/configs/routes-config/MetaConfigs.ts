@@ -4,6 +4,7 @@ import type { MetaType } from "@/types/route-types/MetaType"
 export const MetaConfigs: Record<UrlPathConfigs, MetaType> = {
   [UrlPathConfigs.INDEX]: {
     pageName: 'top',
-    description: 'トップページ'
+    title: 'アプリトップページ(todo)',
+    description: 'トップページ(todo)'
   }
 } as const
