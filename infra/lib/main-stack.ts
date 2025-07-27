@@ -49,9 +49,9 @@ export class MainStack extends cdk.Stack {
     /**
      * @type {cloudfront.CfnOriginAccessControl}
      */
-    return new cloudfront.CfnOriginAccessControl(this, 'CloudFrontOAC', {
+    return new cloudfront.CfnOriginAccessControl(this, `${this.stackName}-CloudFrontOAC`, {
       originAccessControlConfig: {
-        name: `${DOMAIN.replace(/./g, '-')}-oac`,
+        name: `${this.stackName}-oac`,
         originAccessControlOriginType: 's3',
         signingBehavior: 'always',
         signingProtocol: 'sigv4',
@@ -63,7 +63,7 @@ export class MainStack extends cdk.Stack {
     /**
      * @type {cloudfront.Function}
      */
-    return new cloudfront.Function(this, 'SpaIndexFunction', {
+    return new cloudfront.Function(this, `${this.stackName}-SpaIndexFunction`, {
       code: cloudfront.FunctionCode.fromInline(`
         function handler(event) {
             var request = event.request;
@@ -85,7 +85,7 @@ export class MainStack extends cdk.Stack {
     acm: certificatemanager.ICertificate
   ): cloudfront.Distribution => {
     const spaIndexFunction = this.createCloudFrontFunction();
-    const distribution = new cloudfront.Distribution(this, 'CloudFrontDistribution', {
+    const distribution = new cloudfront.Distribution(this, `${this.stackName}-CloudFrontDistribution`, {
       defaultRootObject: 'index.html',
       defaultBehavior: {
         origin: cloudfront_origins.S3BucketOrigin.withOriginAccessControl(mainBucket),

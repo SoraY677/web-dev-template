@@ -1,10 +1,11 @@
 import * as cdk from 'aws-cdk-lib'
 import { MainStack } from '../lib/main-stack'
 import { CertificateStack } from '../lib/certification-stack'
+import { DOMAIN } from '../../common/src/env'
 
 const app = new cdk.App()
 
-const stackName = process.env.STACK_NAME
+const stackName = DOMAIN.replace(/\./g, '-')
 if (!stackName) process.exit(1)
 
 const certificateStack = new CertificateStack(app, `${stackName}-certification`, {

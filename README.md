@@ -45,7 +45,13 @@ docker compose exec root yarn setup
 #### ビルド
 
 ```sh
-docker compose exec root yarn build
+docker compose exec root DOMAIN_HEAD=${ドメイン先頭} yarn build
+```
+
+#### デプロイ(インフラのみ)
+
+```sh
+docker compose exec root DOMAIN_HEAD=${ドメイン先頭} yarn deploy
 ```
 
 #### テスト
