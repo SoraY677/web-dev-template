@@ -11,5 +11,12 @@ services:
         - "${SERVER_PORT}:${SERVER_PORT}"
       env_file:
         - .env
+      environment:
+        AWS_STACK_NAME: ${INFRA_AWS_STACK_NAME}
+        AWS_ACCESS_KEY_ID: ${INFRA_AWS_ACCESS_KEY_ID}
+        AWS_SECRET_ACCESS_KEY: ${INFRA_AWS_SECRET_ACCESS_KEY}
+        AWS_DEFAULT_ACCOUNT: ${INFRA_AWS_DEFAULT_ACCOUNT}
+        AWS_DEFAULT_REGION: ${INFRA_AWS_DEFAULT_REGION}
+        AWS_DEFAULT_OUTPUT: ${INFRA_AWS_DEFAULT_OUTPUT}
       command: yarn dev
       tty: true

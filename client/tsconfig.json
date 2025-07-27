@@ -12,16 +12,17 @@
     "noUncheckedSideEffectImports": true,
     "paths": {
       "@/*": ["./src/*"],
+      "@common/*": ["../common/src/*"],
       "@assets/*": ["./src/assets/*"],
       "@components/*": ["./src/components/*"],
       "@composables/*": ["./src/composables/*"],
       "@configs/*": ["./src/configs/*"],
       "@tests/*": ["./src/tests/*"],
       "@types/*": ["./src/types/*"],
-      "@usecases/*": ["./src/usecases/*"]
+      "@usecases/*": ["./src/usecases/*"],
     },
     "baseUrl": ".",
     
   },
-  "include": ["src/**/*.ts", "src/**/*.vue", "vite.config.ts"],
+  "include": ["src/**/*.ts", "src/**/*.vue", "vite.config.ts", "../common/**/*.ts"],
 }

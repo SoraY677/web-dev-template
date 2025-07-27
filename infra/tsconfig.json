@@ -1,17 +1,22 @@
 {
-  
-  "extends": ["../tsconfig.json"],
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@stacks/*": ["./lib/*"]
-    },
+    "target": "ES2015",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "lib": [
+      "es2015"
+    ],
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
     "outDir": "./dist",
   },
-  "include": ["**/*.ts"],
   "exclude": [
     "node_modules",
     "cdk.out",
     "dist"
   ],
+  "references": [
+    { "path": "../tsconfig.json" }
+  ]
 }
