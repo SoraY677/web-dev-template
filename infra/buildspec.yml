@@ -7,7 +7,7 @@ phases:
     commands:
       - npm install -g yarn
       - yarn
-      - yarn:setup
+      - yarn setup
   build:
     commands:
       - yarn build
