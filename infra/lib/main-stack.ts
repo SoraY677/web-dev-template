@@ -1,4 +1,3 @@
-import * as cdk from 'aws-cdk-lib'
 import * as s3 from 'aws-cdk-lib/aws-s3'
 import * as cloudfront from 'aws-cdk-lib/aws-cloudfront'
 import * as cloudfront_origins from 'aws-cdk-lib/aws-cloudfront-origins'
@@ -7,12 +6,14 @@ import * as route53_targets from 'aws-cdk-lib/aws-route53-targets';
 import * as certificatemanager from 'aws-cdk-lib/aws-certificatemanager';
 import { Construct } from 'constructs'
 import { DOMAIN, DOMAIN_BASE } from '../../common/src/env';
+import { aws_codebuild, aws_codepipeline, aws_codepipeline_actions, aws_iam, aws_route53, Duration, RemovalPolicy, Stack, StackProps } from 'aws-cdk-lib';
+import { Context } from './context';
 
-export interface MainStackProps extends cdk.StackProps {
+export interface MainStackProps extends StackProps {
   certificateArn: string;
 }
 
-export class MainStack extends cdk.Stack {
+export class MainStack extends Stack {
   constructor(scope: Construct, id: string, props: MainStackProps) {
     super(scope, id, props)
     const hostedZone = route53.HostedZone.fromLookup(this, 'HostedZone', {
@@ -24,12 +25,13 @@ export class MainStack extends cdk.Stack {
     const oac = this.createCloudFrontOac();
     const distribution = this.createCloudFrontDistribution(DOMAIN, mainBucket, oac, acm);
     this.createRoute53Record(DOMAIN, hostedZone, distribution);
+    this.createCodePipeline(DOMAIN, mainBucket)
   }
 
   // S3 MainBucket
   private createS3MainBucket = (): s3.Bucket => {
     return new s3.Bucket(this, 'MainBucket', {
-      removalPolicy: cdk.RemovalPolicy.DESTROY,
+      removalPolicy: RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
       publicReadAccess: false,
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
@@ -46,9 +48,6 @@ export class MainStack extends cdk.Stack {
 
   // CloudFront
   private createCloudFrontOac = (): cloudfront.CfnOriginAccessControl => {
-    /**
-     * @type {cloudfront.CfnOriginAccessControl}
-     */
     return new cloudfront.CfnOriginAccessControl(this, `${this.stackName}-CloudFrontOAC`, {
       originAccessControlConfig: {
         name: `${this.stackName}-oac`,
@@ -108,13 +107,13 @@ export class MainStack extends cdk.Stack {
           httpStatus: 403,
           responseHttpStatus: 404,
           responsePagePath: '/404.html',
-          ttl: cdk.Duration.seconds(5),
+          ttl: Duration.seconds(5),
         },
         {
           httpStatus: 404,
           responseHttpStatus: 404,
           responsePagePath: '/404.html',
-          ttl: cdk.Duration.seconds(5),
+          ttl: Duration.seconds(5),
         },
       ],
     });
@@ -135,7 +134,7 @@ export class MainStack extends cdk.Stack {
   // Route53
   private createRoute53Record = (
     domainName: string,
-    hostedZone: cdk.aws_route53.IHostedZone,
+    hostedZone: aws_route53.IHostedZone,
     distribution: cloudfront.Distribution
   ): void => {
     new route53.ARecord(this, 'AliasRecord', {
@@ -145,5 +144,100 @@ export class MainStack extends cdk.Stack {
         new route53_targets.CloudFrontTarget(distribution)
       ),
     })
+  }
+
+  // CodePipeline
+  private createCodePipeline = (
+    domainName: string,
+    mainBucket: s3.Bucket
+  ) => {
+    const sourceOutput = new aws_codepipeline.Artifact();
+    const buildOutput = new aws_codepipeline.Artifact();
+    const codeBuildProject = this.createCodeBuild(domainName)
+    const artifactsS3Bucket = this.createArtifactsS3Bucket()
+
+    return new aws_codepipeline.Pipeline(this, `${this.stackName}-CodePipeline`, {
+      artifactBucket: artifactsS3Bucket,
+      pipelineName: `${this.stackName}-Pipeline`,
+      stages: [
+        {
+          stageName: 'Source',
+          actions: [
+            new aws_codepipeline_actions.CodeStarConnectionsSourceAction({
+              actionName: 'GitHub_Source',
+              owner: this.getContext(Context.GITHUB_REPO_OWNER),
+              repo: this.getContext(Context.GITHUB_REPO),
+              branch: this.getContext(Context.GITHUB_BRANCH),
+              connectionArn: this.getContext(Context.GITHUB_CONNECTION_ARN),
+              output: sourceOutput,
+            }),
+          ],
+        },
+        {
+          stageName: 'Build',
+          actions: [
+            new aws_codepipeline_actions.CodeBuildAction({
+              actionName: 'CodeBuild',
+              project: codeBuildProject,
+              input: sourceOutput,
+              outputs: [buildOutput],
+            }),
+          ],
+        },
+        {
+          stageName: 'Deploy',
+          actions: [
+            new aws_codepipeline_actions.S3DeployAction({
+              actionName: 'S3_Deploy',
+              bucket: mainBucket,
+              input: buildOutput,
+              extract: true,
+            }),
+          ],
+        },
+      ],
+    });
+  }
+  private createArtifactsS3Bucket = () => {
+    return new s3.Bucket(this, `${this.stackName}-ArtifactsBucket`, {
+      removalPolicy: RemovalPolicy.DESTROY,
+      autoDeleteObjects: true,
+      lifecycleRules: [{ expiration: Duration.days(30) }],
+      encryption: s3.BucketEncryption.S3_MANAGED,
+    });
+  }
+  // Code Build
+  private createCodeBuild = (
+    domainName: string
+  ) => {
+    const codeBuildIamRole = this.createCodeBuildIamRole()
+    
+    return new aws_codebuild.PipelineProject(this, `${this.stackName}-CodeBuild`, {
+      environment: {
+        buildImage: aws_codebuild.LinuxBuildImage.AMAZON_LINUX_2_ARM_3,
+        computeType: aws_codebuild.ComputeType.SMALL,
+        privileged: false,
+      },
+      environmentVariables: {
+        DOMAIN: { value: domainName },
+        ENV_MODE: { value: 'production' },
+      },
+      buildSpec: aws_codebuild.BuildSpec.fromSourceFilename('infra/buildspec.yml'),
+      role: codeBuildIamRole,
+    })
+  }
+  private createCodeBuildIamRole = () => {
+    const codeBuildRole = new aws_iam.Role(this, `${this.stackName}-CodeBuildRole`, {
+      assumedBy: new aws_iam.ServicePrincipal('codebuild.amazonaws.com'),
+    });
+    codeBuildRole.addManagedPolicy(aws_iam.ManagedPolicy.fromAwsManagedPolicyName('AmazonS3FullAccess'));
+    codeBuildRole.addManagedPolicy(aws_iam.ManagedPolicy.fromAwsManagedPolicyName('CloudWatchLogsFullAccess'));
+    return codeBuildRole
+  }
+
+  private getContext = (context: Context) => {
+    const env = this.node.tryGetContext('env')
+    const value = this.node.tryGetContext('context')?.[env]?.[context] 
+    return value ?? ''
   }
 }

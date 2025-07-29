@@ -8,10 +8,10 @@
   "scripts": {
     "watch": "nodemon",
     "test": "jest",
-    "clean": "rimraf cdk.context.json && rimraf cdk.out",
-    "build": "yarn clean && cdk bootstrap",
-    "deploy": "yarn clean && cdk deploy --all",
-    "destroy": "cdk destroy --all"
+    "clean": "rimraf cdk.out",
+    "build:dev": "yarn clean && cdk bootstrap --context env=dev",
+    "deploy:dev": "yarn clean && cdk deploy --all --context env=dev",
+    "destroy": "cdk destroy --all --context env=dev"
   },
   "devDependencies": {
     "@types/jest": "^29.5.14",
