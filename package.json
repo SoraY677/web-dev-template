@@ -22,7 +22,7 @@
     "build": "run-p build:*",
     "build:client": "yarn --cwd client 'build'",
     "build:server": "yarn --cwd server 'build'",
-    "build:infra": "yarn --cwd infra 'build'",
+    "bootstrap:infra": "yarn --cwd infra 'build:dev'",
     "deploy": "run-p deploy:*",
     "deploy:infra": "yarn --cwd infra 'deploy'",
     "destroy": "run-p destroy:*",
