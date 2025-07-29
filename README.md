@@ -69,7 +69,7 @@ docker compose exec root yarn test
 ```sh
 docker compose exec root yarn lint      # チェックのみ
 docker compose exec root yarn lint:fix  # 矯正含む
-``
+```
 
 ### 各サービスエンドポイント
 
