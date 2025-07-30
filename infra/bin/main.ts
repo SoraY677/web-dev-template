@@ -1,7 +1,7 @@
 import * as cdk from 'aws-cdk-lib'
 import dotenv from 'dotenv';
-import { MainStack } from '../lib/main-stack'
-import { CertificateStack } from '../lib/certification-stack'
+import { MainStack } from '../lib/MainStack'
+import { CertificateStack } from '../lib/CertificationStack'
 import { getEnv } from '../../common/src/env';
 import path from 'path';
 
