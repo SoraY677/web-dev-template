@@ -8,13 +8,13 @@ describe('LoggerUtilUsecase', () => {
     expect(logSpy).toHaveBeenCalledWith('[INFO] test!')
   })
 
-    it('logWarn', () => {
+  it('logWarn', () => {
     const logSpy = vi.spyOn(console, 'warn')
     logWarn('test!')
     expect(logSpy).toHaveBeenCalledWith('[WARN] test!')
   })
 
-    it('logError', () => {
+  it('logError', () => {
     const logSpy = vi.spyOn(console, 'error')
     logError('test!')
     expect(logSpy).toHaveBeenCalledWith('[ERROR] test!')

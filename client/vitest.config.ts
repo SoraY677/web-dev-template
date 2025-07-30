@@ -3,6 +3,6 @@ import viteConfig from './vite.config'
 
 export default defineConfig({
   test: {
-    alias: { ...( viteConfig.resolve?.alias ?? {})}
+    alias: { ...( viteConfig.resolve?.alias ?? {})},
   },
 })

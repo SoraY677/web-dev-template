@@ -9,7 +9,7 @@ process.env.VITE_DOMAIN = domain ? `https://${domain}` : 'http://localhost'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [vue(), vuetify({ autoImport: true }),],
+  plugins: [vue(), vuetify({ autoImport: true })],
   server: {
     host: true,
     port: Number(process.env.CLIENT_PORT ?? 80),
