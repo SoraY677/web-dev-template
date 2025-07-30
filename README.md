@@ -45,17 +45,17 @@ docker compose exec root yarn setup
 #### ビルド
 
 ```sh
-docker compose exec root "DOMAIN_HEAD=${ドメイン先頭} yarn build:${env}"
+docker compose exec root "yarn build:${env}"
 ```
 
 #### デプロイ(インフラのみ)
 
 ```sh
 # 作成
-docker compose exec root "DOMAIN_HEAD=${ドメイン先頭} yarn deploy:${env}"
+docker compose exec root "yarn deploy:${env}"
 
 # 削除
-docker compose exec root "DOMAIN_HEAD=${ドメイン先頭} yarn destroy:${env}"
+docker compose exec root "yarn destroy:${env}"
 ```
 
 #### テスト
