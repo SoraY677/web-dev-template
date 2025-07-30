@@ -10,20 +10,21 @@ import {getEnv } from '../../common/src/env'
 
 export interface MainStackProps extends StackProps {
   certificateArn: string;
+  hostedZone?: awsRoute53.IHostedZone;
 }
 
 export class MainStack extends Stack {
   private env: ReturnType<typeof getEnv>
-  constructor(scope: Construct, id: string, props: MainStackProps) {
+  constructor(scope: Construct, id: string, props?: MainStackProps) {
     super(scope, id, props)
     this.env = getEnv()
 
     const domain = this.env.DOMAIN
-    const hostedZone = route53.HostedZone.fromLookup(this, 'HostedZone', {
+    const hostedZone = props?.hostedZone ?? route53.HostedZone.fromLookup(this, 'HostedZone', {
       domainName: this.env.DOMAIN_BASE,
     })
 
-    const acm = this.getAcmCertificate(props.certificateArn)
+    const acm = this.getAcmCertificate(props?.certificateArn ?? '')
     const mainBucket = this.createS3MainBucket()
     const oac = this.createCloudFrontOac()
     const distribution = this.createCloudFrontDistribution(domain, mainBucket, oac, acm)

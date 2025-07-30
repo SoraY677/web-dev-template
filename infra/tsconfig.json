@@ -1,22 +1,25 @@
 {
+  "extends":[
+    "../tsconfig.json"
+  ],
   "compilerOptions": {
-    "target": "ES2015",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "lib": [
-      "es2015"
-    ],
+    "target": "es2022",
+    "lib": ["es2022"],
+    "isolatedModules": true,
     "typeRoots": [
       "./node_modules/@types"
     ],
     "outDir": "./dist",
   },
+  "include": [
+    "./**/*",
+    "../common/**/*"
+  ],
   "exclude": [
     "node_modules",
     "cdk.out",
     "dist"
-  ],
-  "references": [
-    { "path": "../tsconfig.json" }
   ]
 }
