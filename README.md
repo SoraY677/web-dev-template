@@ -45,17 +45,20 @@ docker compose exec root yarn setup
 #### ビルド
 
 ```sh
-docker compose exec root "yarn build:${env}"
+docker compose exec root yarn build
 ```
 
 #### デプロイ(インフラのみ)
 
 ```sh
-# 作成
-docker compose exec root "yarn deploy:${env}"
+# 検証
+docker compose exec root yarn bootstrap env=${env}
+
+# 生成
+docker compose exec root yarn deploy env=${env}
 
 # 削除
-docker compose exec root "yarn destroy:${env}"
+docker compose exec root yarn destroy env=${env}
 ```
 
 #### テスト

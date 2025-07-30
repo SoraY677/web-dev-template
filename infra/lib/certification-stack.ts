@@ -1,22 +1,30 @@
-import * as cdk from 'aws-cdk-lib';
 import * as certificatemanager from 'aws-cdk-lib/aws-certificatemanager';
 import * as route53 from 'aws-cdk-lib/aws-route53';
 import { Construct } from 'constructs';
-import { DOMAIN, DOMAIN_BASE } from '../../common/src/env';
+import { Stack, StackProps } from 'aws-cdk-lib';
+import {  getEnv } from '../../common/src/env';
 
-export class CertificateStack extends cdk.Stack {
-  public readonly certificateArn: string;
 
-  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
+
+export class CertificateStack extends Stack {
+  private readonly _certificateArn: string;
+  private env: ReturnType<typeof getEnv>;
+
+  constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, { ...props, env: { ...props?.env, region: 'us-east-1' } });
+    this.env = getEnv()
 
-    const hostedZone = route53.HostedZone.fromLookup(this, 'HostedZone', { domainName: DOMAIN_BASE });
+    const hostedZone = route53.HostedZone.fromLookup(this, 'HostedZone', { 
+      domainName: this.env.DOMAIN_BASE
+    });
 
     const certificate = new certificatemanager.Certificate(this, 'SiteCertificate', {
-      domainName: DOMAIN,
+      domainName: this.env.DOMAIN,
       validation: certificatemanager.CertificateValidation.fromDns(hostedZone),
     });
 
-    this.certificateArn = certificate.certificateArn;
+    this._certificateArn = certificate.certificateArn;
   }
+
+  get certificateArn() { return this._certificateArn }
 }

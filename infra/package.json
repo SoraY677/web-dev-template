@@ -9,9 +9,9 @@
     "watch": "nodemon",
     "test": "jest",
     "clean": "rimraf cdk.out",
-    "build:dev": "yarn clean && cdk bootstrap --context env=dev",
-    "deploy:dev": "yarn clean && cdk deploy --all --context env=dev",
-    "destroy": "cdk destroy --all --context env=dev"
+    "bootstrap": "yarn clean && cdk bootstrap --context",
+    "deploy": "yarn clean && cdk deploy --all --context",
+    "destroy": "yarn clean && cdk destroy --all --context"
   },
   "devDependencies": {
     "@types/jest": "^29.5.14",
@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "aws-cdk-lib": "2.201.0",
-    "constructs": "^10.0.0"
+    "constructs": "^10.0.0",
+    "dotenv": "^17.2.1"
   }
 }

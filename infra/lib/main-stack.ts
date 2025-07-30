@@ -5,27 +5,30 @@ import * as route53 from 'aws-cdk-lib/aws-route53';
 import * as route53_targets from 'aws-cdk-lib/aws-route53-targets';
 import * as certificatemanager from 'aws-cdk-lib/aws-certificatemanager';
 import { Construct } from 'constructs'
-import { DOMAIN, DOMAIN_BASE } from '../../common/src/env';
 import { aws_codebuild, aws_codepipeline, aws_codepipeline_actions, aws_iam, aws_route53, Duration, RemovalPolicy, Stack, StackProps } from 'aws-cdk-lib';
-import { Context } from './context';
+import {getEnv } from '../../common/src/env';
 
 export interface MainStackProps extends StackProps {
   certificateArn: string;
 }
 
 export class MainStack extends Stack {
+  private env: ReturnType<typeof getEnv>;
   constructor(scope: Construct, id: string, props: MainStackProps) {
     super(scope, id, props)
+    this.env = getEnv()
+
+    const domain = this.env.DOMAIN
     const hostedZone = route53.HostedZone.fromLookup(this, 'HostedZone', {
-      domainName: DOMAIN_BASE,
+      domainName: this.env.DOMAIN_BASE,
     });
 
     const acm = this.getAcmCertificate(props.certificateArn)
     const mainBucket = this.createS3MainBucket();
     const oac = this.createCloudFrontOac();
-    const distribution = this.createCloudFrontDistribution(DOMAIN, mainBucket, oac, acm);
-    this.createRoute53Record(DOMAIN, hostedZone, distribution);
-    this.createCodePipeline(DOMAIN, mainBucket)
+    const distribution = this.createCloudFrontDistribution(domain, mainBucket, oac, acm);
+    this.createRoute53Record(domain, hostedZone, distribution);
+    this.createCodePipeline(domain, mainBucket)
   }
 
   // S3 MainBucket
@@ -131,7 +134,7 @@ export class MainStack extends Stack {
     return acm
   }
 
-  // Route53
+  // // Route53
   private createRoute53Record = (
     domainName: string,
     hostedZone: aws_route53.IHostedZone,
@@ -146,7 +149,7 @@ export class MainStack extends Stack {
     })
   }
 
-  // CodePipeline
+  // // CodePipeline
   private createCodePipeline = (
     domainName: string,
     mainBucket: s3.Bucket
@@ -165,10 +168,10 @@ export class MainStack extends Stack {
           actions: [
             new aws_codepipeline_actions.CodeStarConnectionsSourceAction({
               actionName: 'GitHub_Source',
-              owner: this.getContext(Context.GITHUB_REPO_OWNER),
-              repo: this.getContext(Context.GITHUB_REPO),
-              branch: this.getContext(Context.GITHUB_BRANCH),
-              connectionArn: this.getContext(Context.GITHUB_CONNECTION_ARN),
+              owner: this.env.INFRA_GITHUB_REPO_OWNER,
+              repo: this.env.INFRA_GITHUB_REPO_NAME,
+              branch: this.env.INFRA_GITHUB_REPO_BRANCH,
+              connectionArn: this.env.INFRA_GITHUB_CONNECTION_ARN,
               output: sourceOutput,
             }),
           ],
@@ -233,11 +236,5 @@ export class MainStack extends Stack {
     codeBuildRole.addManagedPolicy(aws_iam.ManagedPolicy.fromAwsManagedPolicyName('AmazonS3FullAccess'));
     codeBuildRole.addManagedPolicy(aws_iam.ManagedPolicy.fromAwsManagedPolicyName('CloudWatchLogsFullAccess'));
     return codeBuildRole
-  }
-
-  private getContext = (context: Context) => {
-    const env = this.node.tryGetContext('env')
-    const value = this.node.tryGetContext('context')?.[env]?.[context] 
-    return value ?? ''
   }
 }
