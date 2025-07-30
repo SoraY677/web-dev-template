@@ -1,15 +1,29 @@
 import * as cdk from 'aws-cdk-lib'
-import { MainStack } from '@stacks/main-stack'
+import dotenv from 'dotenv'
+import { MainStack } from '../lib/MainStack'
+import { CertificateStack } from '../lib/CertificationStack'
+import { getEnv } from '../../common/src/env'
+import path from 'path'
 
 const app = new cdk.App()
+const env = app.node.tryGetContext('env')
+dotenv.config({ path: path.join(__dirname, `../../.env.${env}`) })
 
-const stackName = process.env.INFRA_AWS_STACK_NAME
-if (!stackName) process.exit(1)
+const stackName = getEnv().DOMAIN.replace(/\./g, '-')
 
-/* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
+const certificateStack = new CertificateStack(app, `${stackName}-certification`, {
+  env: {
+    account: process.env.INFRA_AWS_DEFAULT_ACCOUNT,
+    region: 'us-east-1',
+  },
+  crossRegionReferences: true,
+})
+
 new MainStack(app, stackName, {
   env: {
     account: process.env.INFRA_AWS_DEFAULT_ACCOUNT,
     region: process.env.INFRA_AWS_DEFAULT_REGION,
   },
+  crossRegionReferences: true,
+  certificateArn: certificateStack.certificateArn,
 })

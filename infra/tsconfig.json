@@ -1,17 +1,25 @@
 {
-  
-  "extends": ["../tsconfig.json"],
+  "extends":[
+    "../tsconfig.json"
+  ],
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@stacks/*": ["./lib/*"]
-    },
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "target": "es2022",
+    "lib": ["es2022"],
+    "isolatedModules": true,
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
     "outDir": "./dist",
   },
-  "include": ["**/*.ts"],
+  "include": [
+    "./**/*",
+    "../common/**/*"
+  ],
   "exclude": [
     "node_modules",
     "cdk.out",
     "dist"
-  ],
+  ]
 }

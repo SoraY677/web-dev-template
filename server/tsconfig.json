@@ -3,7 +3,11 @@
   "compilerOptions": {
     "outDir": "./dist"
   },
+    "paths": {
+      "@common/*": ["../common/src/*"]
+    },
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "../common/src/**/*.ts"
   ]
 }
