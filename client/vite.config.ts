@@ -2,9 +2,10 @@ import { defineConfig  } from 'vite'
 import vuetify from 'vite-plugin-vuetify'
 import vue from '@vitejs/plugin-vue'
 import path from 'path'
-import { DOMAIN } from '../common/src/env'
+import { getEnv } from '../common/src/env'
 
-process.env.VITE_DOMAIN = DOMAIN ? `https://${DOMAIN}` : 'http://localhost'
+const domain = getEnv().DOMAIN
+process.env.VITE_DOMAIN = domain ? `https://${domain}` : 'http://localhost'
 
 // https://vite.dev/config/
 export default defineConfig({
