@@ -7,12 +7,12 @@
 <script setup lang="ts">
 import { useMeta } from '@/composables/head/Meta';
 import { useRoute } from '@/composables/router';
-import { envConfig } from '@/configs/EnvConfig';
+import { clientEnvConfig } from '@/configs/ClientEnvConfig';
 import { MetaConfigs } from '@/configs/routes-config/MetaConfigs';
 import type { UrlPathConfigs } from '@/configs/routes-config/UrlPathConfigs';
 
 const route = useRoute()
-useMeta(envConfig.domain).setMeta(
+useMeta(clientEnvConfig.domain).setMeta(
   MetaConfigs[route.getCurrentPath() as UrlPathConfigs],
   route.getCurrentPath()
 )
