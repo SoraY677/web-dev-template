@@ -6,6 +6,9 @@ services:
       volumes:
         - ./:/app
         - /app/node_modules
+        - /app/client/node_modules
+        - /app/server/node_modules
+        - /app/infra/node_modules
       ports:
         - "${CLIENT_PORT}:${CLIENT_PORT}"
         - "${SERVER_PORT}:${SERVER_PORT}"
