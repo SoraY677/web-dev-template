@@ -20,6 +20,7 @@
   "exclude": [
     "node_modules",
     "cdk.out",
-    "dist"
+    "dist",
+    "**/*.test.ts"
   ]
 }

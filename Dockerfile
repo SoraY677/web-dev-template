@@ -3,4 +3,4 @@ FROM node:24-alpine
 COPY . /app
 WORKDIR /app
 
-RUN yarn install && yarn setup
+RUN yarn install

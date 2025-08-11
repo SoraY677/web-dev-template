@@ -11,10 +11,6 @@
     "infra"
   ],
   "scripts": {
-    "setup": "run-p setup:*",
-    "setup:client": "yarn workspace client install",
-    "setup:server": "yarn workspace server install",
-    "setup:infra": "yarn workspace infra install",
     "dev": "run-p dev:*",
     "dev:client": "yarn workspace client dev",
     "dev:server": "yarn workspace server dev",
