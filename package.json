@@ -6,9 +6,9 @@
   "license": "MIT",
   "private": true,
   "workspaces": [
-    "client/*",
-    "server/*",
-    "infra/*"
+    "client",
+    "server",
+    "infra"
   ],
   "scripts": {
     "setup": "run-p setup:*",
