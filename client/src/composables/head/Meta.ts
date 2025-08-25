@@ -1,5 +1,6 @@
-import type { MetaType } from '@/types/route-types/MetaType'
 import { useHead } from '@unhead/vue'
+
+import type { MetaType } from '@type/route-types/MetaType'
 
 export const useMeta = (root: string) => ({
   setMeta: (meta: MetaType, path: string) => {

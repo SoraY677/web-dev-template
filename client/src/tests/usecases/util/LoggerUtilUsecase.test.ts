@@ -1,5 +1,6 @@
-import { logError, logInfo, logWarn } from '@/usecases/util/LoggerUtilUsecase'
 import { describe, it, expect, vi } from 'vitest'
+
+import { logError, logInfo, logWarn } from '@usecases/util/LoggerUtilUsecase'
 
 describe('LoggerUtilUsecase', () => {
   it('logInfo', () => {

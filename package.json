@@ -11,6 +11,8 @@
     "infra"
   ],
   "scripts": {
+    "setup-local": "run-s setup-local:*",
+    "setup-local:husky": "husky",
     "dev": "run-p dev:*",
     "dev:client": "yarn workspace client dev",
     "dev:server": "yarn workspace server dev",
@@ -30,6 +32,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.25.1",
+    "@stylistic/eslint-plugin": "^5.2.3",
     "@types/node": "^22.14.1",
     "commander": "^13.1.0",
     "eslint": "^9.25.1",
@@ -37,6 +40,7 @@
     "eslint-plugin-unicorn": "^58.0.0",
     "eslint-plugin-vue": "^10.2.0",
     "globals": "^16.0.0",
+    "husky": "^9.1.7",
     "lint-staged": "^15.5.1",
     "npm-run-all": "^4.1.5",
     "rimraf": "^6.0.1",

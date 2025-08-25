@@ -1,23 +1,61 @@
-import globals from 'globals'
-import { defineConfig, globalIgnores  } from 'eslint/config'
-import tsParser from "@typescript-eslint/parser";
-import pluginVue from 'eslint-plugin-vue'
-import vueParser from 'vue-eslint-parser'
+import eslint from '@eslint/js'
+import stylisticPlugin from '@stylistic/eslint-plugin'
+import tsParser from '@typescript-eslint/parser'
 import pluginImport from 'eslint-plugin-import'
+import pluginVue from 'eslint-plugin-vue'
+import { defineConfig, globalIgnores } from 'eslint/config'
+import globals from 'globals'
+import tseslint from 'typescript-eslint'
+import vueParser from 'vue-eslint-parser'
+import importPlugin from 'eslint-plugin-import'
+
+const pathGroups = [
+  {
+    pattern: '{@common/**,@configs/**,@assets/**,}',
+    group: 'parent',
+    position: 'after',
+  },
+  {
+    pattern: '{@components/**,@composables/**,@type/**,@usecases/**,}',
+    group: 'parent',
+    position: 'after',
+  },
+  {
+    pattern: '{@/**,}',
+    group: 'parent',
+    position: 'after',
+  },
+]
 
 export default defineConfig([
+  eslint.configs.recommended,
+  tseslint.configs.recommended,
+  stylisticPlugin.configs.recommended,
   /* TypeScript */
   {
-    files: ['**/*.{ts,tsx}'],
+    files: ['**/*.ts'],
+    plugins: {
+      '@stylistic': stylisticPlugin,
+      'import': importPlugin,
+    },
+    languageOptions: {
+      parser: tsParser,
+      globals: {
+        ...globals.node,
+        ...globals.jest,
+      },
+    },
     rules: {
-      semi: ['error', 'never'],
-      'semi-spacing': ['error', {after: true, before: false}],
-      'quote-props': ['error', 'as-needed'],
+      'prefer-const': 'error',
+      'semi-spacing': 'error',
+      'semi-style': 'error',
       'no-extra-semi': 'error',
+      'no-unexpected-multiline': 'error',
+      'no-unreachable': 'error',
+      'quote-props': ['error', 'as-needed'],
       'no-undef': 'warn',
-      quotes: ['error', 'single'],
+      'quotes': ['error', 'single'],
       'space-before-blocks': ['error', { functions: 'always' }],
-      'semi-style': ['error', 'last'],
       'comma-dangle': ['error', 'always-multiline'],
       'no-unused-vars': 'error',
       'array-bracket-spacing': 'error',
@@ -37,20 +75,34 @@ export default defineConfig([
       'no-trailing-spaces': 'error',
       'operator-linebreak': 'error',
       'sort-vars': 'error',
-      'keyword-spacing': ["error", {"before": true, "after": true }],
+      'keyword-spacing': ['error', { before: true, after: true }],
       'space-infix-ops': 'error',
-    },
-    languageOptions: { 
-      parser: tsParser,
-      globals: {
-        ...globals.node,
-        ...globals.jest,
-      },
+      '@stylistic/brace-style': 'off',
+      'import/order': [
+        'error',
+        {
+          'groups': [
+            'builtin',
+            'external',
+            'internal',
+            ['parent', 'sibling', 'index'],
+            'object',
+            'type',
+          ],
+          'pathGroups': pathGroups,
+          'pathGroupsExcludedImportTypes': ['builtin'],
+          'newlines-between': 'always',
+          'alphabetize': {
+            order: 'asc',
+            caseInsensitive: true,
+          },
+        },
+      ],
     },
   },
   /* Vue */
   {
-    files: ['**/*.{vue}'],
+    files: ['**/*.vue'],
     plugins: {
       vue: pluginVue,
       import: pluginImport,
@@ -58,7 +110,7 @@ export default defineConfig([
     languageOptions: {
       parser: vueParser,
       globals: {
-        ...globals.node
+        ...globals.node,
       },
       parserOptions: {
         parser: tsParser,
@@ -68,17 +120,35 @@ export default defineConfig([
       },
     },
     rules: {
-      'vue/multi-word-component-names': 'off',
-      'import/order': ['error', {
-        groups: ['builtin', 'external', 'internal', ['parent', 'sibling', 'index']],
-        'newlines-between': 'always',
-        alphabetize: { order: 'asc', caseInsensitive: true },
-      }],
+      'import/order': [
+        'error',
+        {
+          'groups': [
+            'builtin',
+            'external',
+            'internal',
+            ['parent', 'sibling', 'index'],
+            'object',
+            'type',
+          ],
+          'pathGroups': pathGroups,
+          'pathGroupsExcludedImportTypes': ['builtin'],
+          'newlines-between': 'always',
+          'alphabetize': {
+            order: 'asc',
+            caseInsensitive: true,
+          },
+        },
+      ],
+      'semi': ['error', 'never'],
     },
   },
 
   globalIgnores([
-		"**/node_modules/**/*", 
-		"**/dist/**/*", 
-	]),
+    '**/*.js',
+    '**/node_modules/**/*',
+    '**/dist/**/*',
+    '**/cdk.out/**/*',
+    '**/vite.config.ts',
+  ]),
 ])

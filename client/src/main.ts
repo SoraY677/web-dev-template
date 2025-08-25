@@ -1,10 +1,13 @@
-import { createApp } from 'vue'
 import '@assets/styles/index.scss'
+
+import { createHead } from '@unhead/vue/client'
+import { createPinia } from 'pinia'
+import { createApp } from 'vue'
+import { createVuetify } from 'vuetify'
+
 import App from '@components/App.vue'
 import { router } from '@composables/router'
-import { createPinia } from 'pinia'
-import { createHead } from '@unhead/vue/client'
-import { createVuetify } from 'vuetify'
+
 import '@mdi/font/css/materialdesignicons.css'
 import 'vuetify/styles/main.css'
 

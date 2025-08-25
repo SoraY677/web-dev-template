@@ -18,7 +18,7 @@
       "@composables/*": ["./src/composables/*"],
       "@configs/*": ["./src/configs/*"],
       "@tests/*": ["./src/tests/*"],
-      "@types/*": ["./src/types/*"],
+      "@type/*": ["./src/types/*"],
       "@usecases/*": ["./src/usecases/*"],
     },
     "baseUrl": ".",

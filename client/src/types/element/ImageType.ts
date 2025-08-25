@@ -1,6 +1,6 @@
-export type ImageType  = {
-  src: string,
-  width: number,
-  height: number,
+export type ImageType = {
+  src: string
+  width: number
+  height: number
   alt: string
 }

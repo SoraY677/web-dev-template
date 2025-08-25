@@ -1,16 +1,20 @@
-import * as s3 from 'aws-cdk-lib/aws-s3'
+import * as fs from 'fs'
+import path from 'path'
+
+import { aws_codebuild as awsCodeBuild, aws_codepipeline as awsCodepipeline, aws_codepipeline_actions as awsCodepipelineActions, aws_iam as awsIam, aws_route53 as awsRoute53, Duration, RemovalPolicy, Stack, StackProps } from 'aws-cdk-lib'
+import * as certificatemanager from 'aws-cdk-lib/aws-certificatemanager'
 import * as cloudfront from 'aws-cdk-lib/aws-cloudfront'
 import * as cloudfrontOrigins from 'aws-cdk-lib/aws-cloudfront-origins'
 import * as route53 from 'aws-cdk-lib/aws-route53'
 import * as route53Targets from 'aws-cdk-lib/aws-route53-targets'
-import * as certificatemanager from 'aws-cdk-lib/aws-certificatemanager'
+import * as s3 from 'aws-cdk-lib/aws-s3'
 import { Construct } from 'constructs'
-import { aws_codebuild as awsCodeBuild, aws_codepipeline as awsCodepipeline, aws_codepipeline_actions as awsCodepipelineActions, aws_iam as awsIam, aws_route53 as awsRoute53, Duration, RemovalPolicy, Stack, StackProps } from 'aws-cdk-lib'
-import {getEnv } from '../../common/src/env'
+
+import { getEnv } from '../../common/src/env'
 
 export interface MainStackProps extends StackProps {
-  certificateArn: string;
-  hostedZone?: awsRoute53.IHostedZone;
+  certificateArn: string
+  hostedZone?: awsRoute53.IHostedZone
 }
 
 export class MainStack extends Stack {
@@ -62,26 +66,14 @@ export class MainStack extends Stack {
       },
     })
   }
-  private createCloudFrontFunction = (): cloudfront.Function => {
 
-    /**
-     * @type {cloudfront.Function}
-     */
+  private createCloudFrontFunction = (): cloudfront.Function => {
+    const functionCode = fs.readFileSync(path.join(__dirname, '../dist/infra/resources/cloudfront/spaIndexFunction.js'), 'utf8')
     return new cloudfront.Function(this, `${this.stackName}-SpaIndexFunction`, {
-      code: cloudfront.FunctionCode.fromInline(`
-        function handler(event) {
-            var request = event.request;
-            var uri = request.uri;
-            if (uri.endsWith('/')) {
-                request.uri += 'index.html';
-            } else if (!uri.includes('.')) {
-                request.uri += '/index.html';
-            }
-            return request;
-        }
-      `),
+      code: cloudfront.FunctionCode.fromInline(functionCode),
     })
   }
+
   private createCloudFrontDistribution = (
     domainName: string,
     mainBucket: s3.Bucket,
@@ -203,6 +195,7 @@ export class MainStack extends Stack {
       ],
     })
   }
+
   private createArtifactsS3Bucket = () => {
     return new s3.Bucket(this, `${this.stackName}-ArtifactsBucket`, {
       removalPolicy: RemovalPolicy.DESTROY,
@@ -211,6 +204,7 @@ export class MainStack extends Stack {
       encryption: s3.BucketEncryption.S3_MANAGED,
     })
   }
+
   // Code Build
   private createCodeBuild = (
     domainName: string,
@@ -231,6 +225,7 @@ export class MainStack extends Stack {
       role: codeBuildIamRole,
     })
   }
+
   private createCodeBuildIamRole = () => {
     const codeBuildRole = new awsIam.Role(this, `${this.stackName}-CodeBuildRole`, {
       assumedBy: new awsIam.ServicePrincipal('codebuild.amazonaws.com'),
