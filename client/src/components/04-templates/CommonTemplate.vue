@@ -25,4 +25,3 @@ main {
   width: 100%;
 }
 </style>
-

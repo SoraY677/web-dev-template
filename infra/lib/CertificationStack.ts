@@ -1,9 +1,9 @@
+import { Stack, StackProps } from 'aws-cdk-lib'
 import * as certificatemanager from 'aws-cdk-lib/aws-certificatemanager'
 import * as route53 from 'aws-cdk-lib/aws-route53'
 import { Construct } from 'constructs'
-import { Stack, StackProps } from 'aws-cdk-lib'
-import {  getEnv } from '../../common/src/env'
 
+import { getEnv } from '../../common/src/env'
 
 export class CertificateStack extends Stack {
   private readonly _certificateArn: string

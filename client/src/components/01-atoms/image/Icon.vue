@@ -1,6 +1,6 @@
 <template>
   <div>
-    <CImage 
+    <CImage
       :src="props.src"
       :width="props.width"
       :height="props.height"
@@ -10,8 +10,8 @@
 </template>
 
 <script setup lang="ts">
-import type { ImageType } from '@/types/element/ImageType';
-import CImage from '@components/00-commons/CImage.vue';
+import CImage from '@components/00-commons/CImage.vue'
+import type { ImageType } from '@type/element/ImageType'
 
 const props = defineProps<ImageType>()
 

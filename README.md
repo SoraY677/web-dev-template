@@ -36,10 +36,14 @@ docker compose down           # 停止
 docker compose exec root sh
 ```
 
-#### セットアップ
+#### ローカルセットアップ
 
 ```sh
-docker compose exec root yarn setup
+# インストール
+yarn install
+
+# セットアップ
+yarn setup-local
 ```
 
 #### ビルド

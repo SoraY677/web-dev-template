@@ -10,8 +10,8 @@
 </template>
 
 <script setup lang="ts">
-import { useCounterStore } from '@/composables/state/CounterState';
-import AppIcon from '../02-molecules/AppIcon.vue';
+import AppIcon from '@components/02-molecules/AppIcon.vue'
+import { useCounterStore } from '@composables/state/CounterState'
 
 const counterState = useCounterStore()
 

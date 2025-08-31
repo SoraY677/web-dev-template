@@ -5,9 +5,9 @@
 </template>
 
 <script setup lang="ts">
-import type { ImageType } from '@/types/element/ImageType';
+import type { ImageType } from '@type/element/ImageType'
 
-  const props = defineProps<ImageType>()
+const props = defineProps<ImageType>()
 </script>
 
 <style scoped>

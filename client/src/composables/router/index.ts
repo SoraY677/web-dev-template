@@ -1,17 +1,19 @@
-import { UrlPathConfigs } from '@/configs/routes-config/UrlPathConfigs'
-import type { RouteRecordRaw } from 'vue-router'
 import { createRouter, createWebHistory } from 'vue-router'
-import { MetaConfigs } from '@/configs/routes-config/MetaConfigs'
-import { RouteComponentRecord } from '@composables/router/RouteComponents'
 import { useRoute as _useRoute } from 'vue-router'
+
+import { MetaConfigs } from '@configs/routes-config/MetaConfigs'
+import { UrlPathConfigs } from '@configs/routes-config/UrlPathConfigs'
+
+import { RouteComponentRecord } from '@composables/router/RouteComponents'
+
+import type { RouteRecordRaw } from 'vue-router'
 
 const generateRouteRecordRaw = (path: UrlPathConfigs): RouteRecordRaw => ({
   path: path,
   name: MetaConfigs[path].pageName,
   component: RouteComponentRecord[path],
 })
-const routeRecordRaws: RouteRecordRaw[] = Object.values(UrlPathConfigs).map((key) => generateRouteRecordRaw(key))
-
+const routeRecordRaws: RouteRecordRaw[] = Object.values(UrlPathConfigs).map(key => generateRouteRecordRaw(key))
 
 export const router = createRouter({
   history: createWebHistory(),

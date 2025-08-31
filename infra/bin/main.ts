@@ -1,13 +1,15 @@
+import path from 'path'
+
 import * as cdk from 'aws-cdk-lib'
 import dotenv from 'dotenv'
-import { MainStack } from '../lib/MainStack'
-import { CertificateStack } from '../lib/CertificationStack'
+
 import { getEnv } from '../../common/src/env'
-import path from 'path'
+import { CertificateStack } from '../lib/CertificationStack'
+import { MainStack } from '../lib/MainStack'
 
 const app = new cdk.App()
 const env = app.node.tryGetContext('env')
-dotenv.config({ path: path.join(__dirname, `../../.env.${env}`) })
+dotenv.config({ path: path.join(__dirname, `../../.env.${env}`), override: true })
 
 const stackName = getEnv().DOMAIN.replace(/\./g, '-')
 
