@@ -26,7 +26,8 @@
     "test": "run-p test:*",
     "test:client": "yarn workspace client test",
     "test:server": "yarn workspace server test",
-    "test:infra": "yarn workspace infra test",
+    "test-local": "run-p test-local:*",
+    "test-local:infra": "yarn workspace infra test",
     "lint": "eslint \"**/*\"",
     "lint:fix": "eslint --fix \"**/*\""
   },
