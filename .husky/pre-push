@@ -1,3 +1,4 @@
+docker compose up -d
 docker compose exec -T root npm run lint:fix
 docker compose exec -T root npm run build
 docker compose exec -T root npm run test
