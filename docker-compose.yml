@@ -20,5 +20,5 @@ services:
         AWS_DEFAULT_ACCOUNT: ${INFRA_AWS_DEFAULT_ACCOUNT}
         AWS_DEFAULT_REGION: ${INFRA_AWS_DEFAULT_REGION}
         AWS_DEFAULT_OUTPUT: ${INFRA_AWS_DEFAULT_OUTPUT}
-      command: yarn dev
+      command: npm run dev
       tty: true

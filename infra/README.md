@@ -5,11 +5,11 @@
 ### ビルド
 
 ```sh
-yarn bootstrap env=${env}
+npm run bootstrap env=${env}
 ```
 
 ## デプロイ
 
 ```sh
-yarn deploy env=${env}
+npm run deploy env=${env}
 ```

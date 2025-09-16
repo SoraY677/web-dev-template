@@ -1,1 +1,1 @@
-docker compose exec -T root yarn lint:fix && yarn build && yarn test && yarn test-local
+docker compose exec -T root npm run lint:fix && npm run build && npm run test && npm run test-local

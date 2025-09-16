@@ -4,13 +4,13 @@
 
 ```sh
 # ローカル起動
-yarn dev
+npm run dev
 
 # ビルド
-yarn build
+npm run build
 
 # テスト
-yarn test
+npm run test
 ```
 
 ## 主要なディレクトリ構成
