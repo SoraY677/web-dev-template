@@ -1,1 +1,4 @@
-docker compose exec -T root npm run lint:fix && npm run build && npm run test && npm run test-local
+docker compose exec -T root npm run lint:fix
+docker compose exec -T root npm run build
+docker compose exec -T root npm run test
+docker compose exec -T root npm run test-local
