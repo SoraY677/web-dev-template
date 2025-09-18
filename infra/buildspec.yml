@@ -5,12 +5,10 @@ phases:
     runtime-versions:
       nodejs: 24
     commands:
-      - npm install -g yarn
-      - yarn
-      - yarn setup
+      - npm install
   build:
     commands:
-      - yarn build
+      - npm run build
 artifacts:
   files:
     - '**/*'

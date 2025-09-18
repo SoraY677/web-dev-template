@@ -40,42 +40,42 @@ docker compose exec root sh
 
 ```sh
 # インストール
-yarn install
+npm run install
 
 # セットアップ
-yarn setup-local
+npm run setup-local
 ```
 
 #### ビルド
 
 ```sh
-docker compose exec root yarn build
+docker compose exec root npm run build
 ```
 
 #### デプロイ(インフラのみ)
 
 ```sh
 # 検証
-docker compose exec root yarn bootstrap env=${env}
+docker compose exec root npm run bootstrap env=${env}
 
 # 生成
-docker compose exec root yarn deploy env=${env}
+docker compose exec root npm run deploy env=${env}
 
 # 削除
-docker compose exec root yarn destroy env=${env}
+docker compose exec root npm run destroy env=${env}
 ```
 
 #### テスト
 
 ```sh
-docker compose exec root yarn test
+docker compose exec root npm run test
 ```
 
 #### リント
 
 ```sh
-docker compose exec root yarn lint      # チェックのみ
-docker compose exec root yarn lint:fix  # 矯正含む
+docker compose exec root npm run lint      # チェックのみ
+docker compose exec root npm run lint:fix  # 矯正含む
 ```
 
 ### 各サービスエンドポイント

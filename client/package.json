@@ -15,7 +15,8 @@
     "@unhead/vue": "^2.0.12",
     "pinia": "^3.0.3",
     "vue": "^3.5.17",
-    "vue-router": "^4.5.1"
+    "vue-router": "^4.5.1",
+    "common": "*"
   },
   "devDependencies": {
     "@types/node": "^24.0.7",
