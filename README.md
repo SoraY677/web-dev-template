@@ -1,4 +1,8 @@
+<div align=center>
 
+# Web Develop TEMPLATE
+
+</div>
 
 ## セットアップ手順
 
@@ -23,7 +27,21 @@ mise install　
 mise run dev
 ```
 
-### テスト時
+#### DBマイグレーション
+
+- マイグレーション用ファイル生成
+
+```sh
+mise run migration-ready
+```
+
+- マイグレーション実施
+
+```sh
+mise run migration-run
+```
+
+#### テスト時
 
 - 全体実行
 
@@ -38,3 +56,9 @@ mise run test:arg <target-directory>
 
 # ex: `mise run test:arg 10-common`
 ```
+
+## ローカルURL
+
+|画面名称|URL|
+|:---:|:----|
+|DBテーブル管理画面|https://local.drizzle.studio/|

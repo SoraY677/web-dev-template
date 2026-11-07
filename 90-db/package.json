@@ -1,0 +1,23 @@
+{
+  "name": "db",
+  "version": "1.0.0",
+  "license": "ISC",
+  "scripts": {
+    "migrate:ready": "drizzle-kit generate",
+    "migrate:run": "npm run test && npm run migrate:exec",
+    "migrate:exec": "drizzle-kit migrate",
+    "dev": "drizzle-kit studio --host 0.0.0.0",
+    "test": "drizzle-kit check"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.23.1",
+    "drizzle-kit": "^1.0.0-rc.5",
+    "tsx": "^4.23.15"
+  },
+  "dependencies": {
+    "dotenv": "^18.0.9",
+    "drizzle-orm": "^1.0.0-rc.5",
+    "pg": "^8.23.1"
+  },
+  "type": "module"
+}
