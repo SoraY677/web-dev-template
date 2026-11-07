@@ -4,5 +4,8 @@ node = "24.15.0"
 [settings]
 minimum_release_age = "7d" # サプライチェーン攻撃対策
 
+[tasks.dev]
+run = "docker compose up -d --build"
+
 [hooks]
 postinstall = "node 01-scripts/setup/index.ts"
