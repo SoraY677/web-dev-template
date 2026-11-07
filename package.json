@@ -2,13 +2,15 @@
   "version": "1.0.0",
   "license": "MIT",
   "private": true,
-  "scripts": {
-  },
+  "scripts": {},
   "workspaces": [
     "00-doc",
     "10-common",
     "20-client",
     "30-server",
     "90-db"
-  ]
+  ],
+  "dependencies": {
+    "npm-run-all": "^4.1.5"
+  }
 }
