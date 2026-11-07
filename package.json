@@ -2,7 +2,18 @@
   "version": "1.0.0",
   "license": "MIT",
   "private": true,
-  "scripts": {},
+  "scripts": {
+    "dev": "run-p dev:*",
+    "dev:common": "npm run dev --prefix 10-common",
+    "dev:client": "npm run dev --prefix 20-client",
+    "dev:server": "npm run dev --prefix 30-server",
+    "dev:infra": "npm run dev --prefix 40-infra",
+    "test": "run-p test:*",
+    "test:common": "npm run test --prefix 10-common",
+    "test:client": "npm run test --prefix 20-client",
+    "test:server": "npm run test --prefix 30-server",
+    "test:infra": "npm run test --prefix 40-infra"
+  },
   "workspaces": [
     "00-doc",
     "10-common",

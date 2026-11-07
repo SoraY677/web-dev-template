@@ -1,5 +1,9 @@
 {
   "name": "common",
   "version": "1.0.0",
-  "license": "ISC"
+  "license": "ISC",
+  "scripts": {
+    "dev": "echo dev:TODO",
+    "test": "echo test:TODO"
+  }
 }
