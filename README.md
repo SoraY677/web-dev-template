@@ -20,11 +20,21 @@ mise install　
 #### 開発時
 
 ```sh
-npm run dev
+mise run dev
 ```
 
 ### テスト時
 
+- 全体実行
+
 ```sh
-npm run test
+mise run test
+```
+
+- 個別実行
+
+```sh
+mise run test:arg <target-directory>
+
+# ex: `mise run test:arg 10-common`
 ```
