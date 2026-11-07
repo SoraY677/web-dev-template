@@ -8,6 +8,7 @@
     "10-common",
     "20-client",
     "30-server",
+    "40-infra",
     "90-db"
   ],
   "dependencies": {
