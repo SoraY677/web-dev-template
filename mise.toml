@@ -25,4 +25,7 @@ run = "docker compose exec app npm run test --prefix"
 run = "docker compose exec app sh"
 
 [hooks]
-postinstall = "tsx 01-scripts/setup/index.ts"
+postinstall = [
+  "tsx 01-scripts/setup/index.ts",
+  "lefthook install",
+]
