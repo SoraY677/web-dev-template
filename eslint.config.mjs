@@ -12,6 +12,7 @@ export default defineConfig([
   eslint.configs.recommended,
   tseslint.configs.recommended,
   stylisticPlugin.configs.recommended,
+  prettierConfig,
   /* TypeScript */
   {
     files: ['**/*.ts'],
@@ -78,7 +79,6 @@ export default defineConfig([
       ],
     },
   },
-  prettierConfig,
   globalIgnores([
     '**/*.js',
     '**/node_modules/**/*',
