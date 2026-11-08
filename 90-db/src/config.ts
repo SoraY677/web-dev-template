@@ -1,4 +1,4 @@
-import "dotenv";
+import 'dotenv';
 
 const required = (name: string): string => {
   const value = process.env[name];
@@ -7,10 +7,10 @@ const required = (name: string): string => {
 };
 
 export const dbCredentials = {
-  host: required("DB_HOST"),
+  host: required('DB_HOST'),
   port: Number(process.env.DB_PORT ?? 5432),
-  user: required("DB_USER"),
-  password: required("DB_PASSWORD"),
-  database: required("DB_NAME"),
+  user: required('DB_USER'),
+  password: required('DB_PASSWORD'),
+  database: required('DB_NAME'),
   ssl: false,
 } as const;

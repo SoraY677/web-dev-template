@@ -1,4 +1,5 @@
 [tools]
+lefthook = "v2.1.17"
 node = "24.15.0"
 
 [settings]
@@ -20,5 +21,11 @@ run = "docker compose exec app npm run test"
 [tasks."test:arg"]
 run = "docker compose exec app npm run test --prefix"
 
+[tasks.shell]
+run = "docker compose exec app sh"
+
 [hooks]
-postinstall = "tsx 01-scripts/setup/index.ts"
+postinstall = [
+  "tsx 01-scripts/setup/index.ts",
+  "lefthook install",
+]

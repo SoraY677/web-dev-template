@@ -1,4 +1,4 @@
-import { varchar, timestamp } from "drizzle-orm/pg-core";
+import { varchar, timestamp } from 'drizzle-orm/pg-core';
 
 export const ULID = (id: string) => varchar(id, { length: 36 }).notNull()
 
