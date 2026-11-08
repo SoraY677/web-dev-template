@@ -21,10 +21,16 @@
 mise install　
 ```
 
-#### 開発時
+#### ローカルサーバ起動
 
 ```sh
 mise run dev
+```
+
+#### コンテナの対話型シェル起動
+
+```sh
+mise run shell
 ```
 
 #### DBマイグレーション
