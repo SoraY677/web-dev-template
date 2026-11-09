@@ -1,84 +1,79 @@
 <div align=center>
 
-# ウェブ開発テンプレート
+# Web Develop TEMPLATE
 
 </div>
 
-## 開発情報
+## セットアップ手順
 
-### 環境
+### ツール群
 
-- Docker version 27.1.1, build 631258
+- mise(`v2026.7.0`): https://mise.jdx.dev/getting-started.html
 
-### コマンド
+### 実行コマンド
 
-#### 起動・停止
+#### セットアップ時
 
-```sh
-docker compose up -d          # 起動
-docker compose up -d --build  # ビルド起動
-
-docker compose restart        # 再起動
-
-docker compose down           # 停止
-```
-
-#### コンテナログイン
+> [!NOTE]
+> 初回のみ実行する
 
 ```sh
-docker compose exec root sh
+mise install　
 ```
 
-#### ローカルセットアップ
+#### ローカルサーバ起動
 
 ```sh
-# インストール
-npm run install
-
-# セットアップ
-npm run setup-local
+mise run dev
 ```
 
-#### ビルド
+#### コンテナの対話型シェル起動
 
 ```sh
-docker compose exec root npm run build
+mise run shell
 ```
 
-#### デプロイ(インフラのみ)
+#### DBマイグレーション
+
+- マイグレーション用ファイル生成
 
 ```sh
-# 検証
-docker compose exec root npm run bootstrap env=${env}
-
-# 生成
-docker compose exec root npm run deploy env=${env}
-
-# 削除
-docker compose exec root npm run destroy env=${env}
+mise run migration-ready
 ```
 
-#### テスト
+- マイグレーション実施
 
 ```sh
-docker compose exec root npm run test
+mise run migration-run
 ```
 
-#### リント
+#### テスト時
+
+- 全体実行
 
 ```sh
-docker compose exec root npm run lint      # チェックのみ
-docker compose exec root npm run lint:fix  # 矯正含む
+mise run test
 ```
 
-### 各サービスエンドポイント
+- 個別実行
 
-|種別|パス|
+```sh
+mise run test:arg <target-directory>
+
+# ex: `mise run test:arg 10-common`
+```
+
+## ローカルURL
+
+|画面名称|URL|
 |:---:|:----|
-|クライアント|[`http://localhost/`](http://localhost/)|
-|サーバ|[`http://localhost:8000/`](http://localhost:8000/)|
+|DBテーブル管理画面|https://local.drizzle.studio/|
 
-### ドキュメント一覧
+## リリース手順
 
-- [コーディングルール](./doc/develop/coding-rule.md)
-- [その他Tips](https://github.com/SoraY677/web-dev-template/wiki)
+- リポジトリのGitHubActionsから `Release` ワークフローを実行してリリース
+  - https://github.com/SoraY677/<対象リポジトリ名>/actions/workflows/release.yml
+  - バージョンは `vX.X.X` 形式
+    - 先頭 `v?.x.x`: メジャーアップデート / 互換性のない大幅な変更(APIの変更、既存機能が動かなくなる修正など)
+    - 中間 `vx.?.x`: マイナーアップデート / 後方互換性がある機能追加(新しい機能の追加、非推奨機能の追加など)
+    - 末尾 `vx.x.?`: パッチアップデート / 後方互換性があるバグ修正(不具合の修正、軽微なパフォーマンス改善など)

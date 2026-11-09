@@ -1,79 +1,50 @@
-# 
-# ワークフローディスパッチからリリースできるワークフロー
-# 　※ releaseブランチを事前に作成しておくこと
-#
 name: Release
 
 on:
   workflow_dispatch:
     inputs:
-      tag_name:
-        description: "version tag"
+      tag:
+        description: "リリースタグ (例: v0.0.1)"
         required: true
-        default: "v0.0.0"
+        type: string
 
 permissions:
-  pull-requests: write
   contents: write
 
 jobs:
-  tag:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.ref_name }}
-
-      - name: Configure git
-        run: |
-          git config user.name "actions-bot"
-          git config user.email "actions@github.com"
-
-      - name: Create and push tag
-        run: |
-          git tag ${{ github.event.inputs.tag_name }}
-          git push origin ${{ github.event.inputs.tag_name }}
-
   release:
-    needs: tag
     runs-on: ubuntu-latest
     steps:
+      - name: Validate tag
+        env:
+          TAG: ${{ inputs.tag }}
+        run: |
+          if [[ ! "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::タグの形式が不正です: '$TAG' (例: v0.0.1)"
+            exit 1
+          fi
+
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Configure git
-        run: |
-          git config user.name "actions-bot"
-          git config user.email "actions@github.com"
-
-      - name: Merge
-        run: |
-          git checkout release
-          git reset --hard origin/${{ github.ref_name }}
-          git push --force origin release
+      - name: Check tag does not exist
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ inputs.tag }}
+        run: |
+          if git rev-parse -q --verify "refs/tags/$TAG" >/dev/null; then
+            echo "::error::タグ '$TAG' は既に存在します"
+            exit 1
+          fi
 
-  note:
-    needs: release
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Build
-        run: echo ${{ github.sha }} > Release.txt
-
-      - name: Test
-        run: cat Release.txt
-
-      - name: Release
-        uses: softprops/action-gh-release@v2
-        with:
-          files: |
-            Release.txt
-          tag_name: ${{ github.event.inputs.tag_name }}
+      - name: Create tag and release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ inputs.tag }}
+        run: |
+          gh release create "$TAG" \
+            --target "$(git rev-parse HEAD)" \
+            --title "$TAG" \
+            --generate-notes \
+            --latest

@@ -1,36 +1,18 @@
 import eslint from '@eslint/js'
 import stylisticPlugin from '@stylistic/eslint-plugin'
 import tsParser from '@typescript-eslint/parser'
-import pluginImport from 'eslint-plugin-import'
-import pluginVue from 'eslint-plugin-vue'
 import { defineConfig, globalIgnores } from 'eslint/config'
 import globals from 'globals'
 import tseslint from 'typescript-eslint'
-import vueParser from 'vue-eslint-parser'
 import importPlugin from 'eslint-plugin-import'
+import prettierConfig from 'eslint-config-prettier'
 
-const pathGroups = [
-  {
-    pattern: '{@common/**,@configs/**,@assets/**,}',
-    group: 'parent',
-    position: 'after',
-  },
-  {
-    pattern: '{@components/**,@composables/**,@type/**,@usecases/**,}',
-    group: 'parent',
-    position: 'after',
-  },
-  {
-    pattern: '{@/**,}',
-    group: 'parent',
-    position: 'after',
-  },
-]
 
 export default defineConfig([
   eslint.configs.recommended,
   tseslint.configs.recommended,
   stylisticPlugin.configs.recommended,
+  prettierConfig,
   /* TypeScript */
   {
     files: ['**/*.ts'],
@@ -43,6 +25,8 @@ export default defineConfig([
       globals: {
         ...globals.node,
         ...globals.jest,
+        window: true,
+        vi: true,
       },
     },
     rules: {
@@ -52,16 +36,17 @@ export default defineConfig([
       'no-extra-semi': 'error',
       'no-unexpected-multiline': 'error',
       'no-unreachable': 'error',
+      'no-console': ['error'],
       'quote-props': ['error', 'as-needed'],
       'no-undef': 'warn',
       'quotes': ['error', 'single'],
       'space-before-blocks': ['error', { functions: 'always' }],
       'comma-dangle': ['error', 'always-multiline'],
-      'no-unused-vars': 'error',
+      'no-unused-vars': 'off',
       'array-bracket-spacing': 'error',
       'block-spacing': 'error',
       'brace-style': 'error',
-      'camelcase': 'error',
+      'camelcase': 'off',
       'comma-spacing': 'error',
       'comma-style': 'error',
       'computed-property-spacing': 'error',
@@ -77,73 +62,23 @@ export default defineConfig([
       'sort-vars': 'error',
       'keyword-spacing': ['error', { before: true, after: true }],
       'space-infix-ops': 'error',
+      '@stylistic/indent': 'off',
       '@stylistic/brace-style': 'off',
-      'import/order': [
+      '@stylistic/operator-linebreak': 'off',
+      '@typescript-eslint/ban-ts-comment': 'off',
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+      ],
+      '@typescript-eslint/consistent-type-imports': [
         'error',
         {
-          'groups': [
-            'builtin',
-            'external',
-            'internal',
-            ['parent', 'sibling', 'index'],
-            'object',
-            'type',
-          ],
-          'pathGroups': pathGroups,
-          'pathGroupsExcludedImportTypes': ['builtin'],
-          'newlines-between': 'always',
-          'alphabetize': {
-            order: 'asc',
-            caseInsensitive: true,
-          },
+          prefer: 'type-imports',
+          disallowTypeAnnotations: false,
         },
       ],
     },
   },
-  /* Vue */
-  {
-    files: ['**/*.vue'],
-    plugins: {
-      vue: pluginVue,
-      import: pluginImport,
-    },
-    languageOptions: {
-      parser: vueParser,
-      globals: {
-        ...globals.node,
-      },
-      parserOptions: {
-        parser: tsParser,
-        sourceType: 'module',
-        extraFileExtensions: ['.vue'],
-        project: './tsconfig.json',
-      },
-    },
-    rules: {
-      'import/order': [
-        'error',
-        {
-          'groups': [
-            'builtin',
-            'external',
-            'internal',
-            ['parent', 'sibling', 'index'],
-            'object',
-            'type',
-          ],
-          'pathGroups': pathGroups,
-          'pathGroupsExcludedImportTypes': ['builtin'],
-          'newlines-between': 'always',
-          'alphabetize': {
-            order: 'asc',
-            caseInsensitive: true,
-          },
-        },
-      ],
-      'semi': ['error', 'never'],
-    },
-  },
-
   globalIgnores([
     '**/*.js',
     '**/node_modules/**/*',

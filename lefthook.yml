@@ -1,0 +1,5 @@
+pre-commit:
+  commands:
+    lint:
+      glob: '*.ts'
+      run: docker compose exec -T app npx eslint {staged_files}

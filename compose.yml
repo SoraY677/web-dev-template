@@ -1,0 +1,44 @@
+services:
+  app:
+    build:
+      context: .
+    working_dir: /app
+    volumes:
+      - ./:/app
+      - /app/10-common/node_modules
+      - /app/20-client/node_modules
+      - /app/30-server/node_modules
+      - /app/40-infra/node_modules
+      - /app/90-db/node_modules
+    command: npm run dev
+    env_file: .env
+    environment:
+      DB_HOST: db
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "4983:4983"
+    tty: true
+
+  db:
+    build:
+      context: ./90-db
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 2s
+      timeout: 3s
+      retries: 15
+    shm_size: 128mb
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
