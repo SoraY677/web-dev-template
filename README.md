@@ -68,3 +68,12 @@ mise run test:arg <target-directory>
 |画面名称|URL|
 |:---:|:----|
 |DBテーブル管理画面|https://local.drizzle.studio/|
+
+## リリース手順
+
+- リポジトリのGitHubActionsから `Release` ワークフローを実行してリリース
+  - https://github.com/SoraY677/<対象リポジトリ名>/actions/workflows/release.yml
+  - バージョンは `vX.X.X` 形式
+    - 先頭 `v?.x.x`: メジャーアップデート / 互換性のない大幅な変更(APIの変更、既存機能が動かなくなる修正など)
+    - 中間 `vx.?.x`: マイナーアップデート / 後方互換性がある機能追加(新しい機能の追加、非推奨機能の追加など)
+    - 末尾 `vx.x.?`: パッチアップデート / 後方互換性があるバグ修正(不具合の修正、軽微なパフォーマンス改善など)
