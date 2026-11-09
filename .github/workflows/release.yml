@@ -3,11 +3,6 @@ name: Release
 on:
   workflow_dispatch:
     inputs:
-      branch:
-        description: "リリース対象のブランチ"
-        required: true
-        default: main
-        type: string
       tag:
         description: "リリースタグ (例: v0.0.1)"
         required: true
@@ -37,7 +32,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.branch }}
           fetch-depth: 0
 
       - name: Check tag does not exist
