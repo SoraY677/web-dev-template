@@ -1,0 +1,66 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: "リリース対象のブランチ"
+        required: true
+        default: main
+        type: string
+      tag:
+        description: "リリースタグ (例: v0.0.1)"
+        required: true
+        type: string
+      prerelease:
+        description: "pre-release として公開する"
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate tag
+        env:
+          TAG: ${{ inputs.tag }}
+        run: |
+          if [[ ! "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::タグの形式が不正です: '$TAG' (例: v0.0.1)"
+            exit 1
+          fi
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.branch }}
+          fetch-depth: 0
+
+      - name: Check tag does not exist
+        env:
+          TAG: ${{ inputs.tag }}
+        run: |
+          if git rev-parse -q --verify "refs/tags/$TAG" >/dev/null; then
+            echo "::error::タグ '$TAG' は既に存在します"
+            exit 1
+          fi
+
+      - name: Create tag and release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ inputs.tag }}
+          PRERELEASE: ${{ inputs.prerelease }}
+        run: |
+          ARGS=()
+          if [ "$PRERELEASE" = "true" ]; then
+            ARGS+=(--prerelease)
+          fi
+          gh release create "$TAG" \
+            --target "$(git rev-parse HEAD)" \
+            --title "$TAG" \
+            --generate-notes \
+            "${ARGS[@]}"
