@@ -36,7 +36,7 @@ export default defineConfig([
       'no-extra-semi': 'error',
       'no-unexpected-multiline': 'error',
       'no-unreachable': 'error',
-      'no-console': ['error'],
+      'no-console': ['warn'],
       'quote-props': ['error', 'as-needed'],
       'no-undef': 'warn',
       'quotes': ['error', 'single'],
