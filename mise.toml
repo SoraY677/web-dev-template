@@ -27,6 +27,6 @@ run = "docker compose exec app sh"
 [hooks]
 postinstall = [
   "npm ci",
-  "tsx 01-scripts/setup/index.ts",
+  "npx tsx 01-scripts/setup/index.ts",
   "lefthook install",
 ]
