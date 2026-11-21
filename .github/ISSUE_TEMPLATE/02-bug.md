@@ -1,6 +1,6 @@
 ---
 name: Bug issue
-about: ''
+about: 不具合報告のイシューテンプレート
 labels: 🦟bug
 assignees: ''
 ---

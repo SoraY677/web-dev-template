@@ -1,6 +1,6 @@
 ---
 name: Chore issue
-about: ''
+about: 設定変更・依存更新など雑務のイシューテンプレート
 labels: 🧰bug
 assignees: ''
 ---

@@ -1,6 +1,6 @@
 ---
 name: Feature issue
-about: ''
+about: 機能追加・改善のイシューテンプレート
 labels: ✨feature
 assignees: ''
 ---
