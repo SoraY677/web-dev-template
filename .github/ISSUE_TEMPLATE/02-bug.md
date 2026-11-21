@@ -1,9 +1,17 @@
 ---
-name: Bug issue
+name: 🦟 Bug issue
 about: 不具合報告のイシューテンプレート
 labels: 🦟bug
 assignees: ''
 ---
+
+<div align=center>
+
+# {title}
+
+不具合報告
+
+</div>
 
 ## 概要
 
