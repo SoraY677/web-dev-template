@@ -5,14 +5,6 @@ labels: ✨feature
 assignees: ''
 ---
 
-<div align=center>
-
-# {title}
-
-機能追加・改善
-
-</div>
-
 ## 概要
 
 ### 背景

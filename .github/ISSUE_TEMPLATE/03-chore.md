@@ -5,14 +5,6 @@ labels: 🧰chore
 assignees: ''
 ---
 
-<div align=center>
-
-# {title}
-
-設定変更・依存更新など
-
-</div>
-
 ## 概要
 
 ### 背景

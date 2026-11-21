@@ -5,14 +5,6 @@ labels: 🦟bug
 assignees: ''
 ---
 
-<div align=center>
-
-# {title}
-
-不具合報告
-
-</div>
-
 ## 概要
 
 ### 背景
