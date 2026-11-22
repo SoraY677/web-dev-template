@@ -30,5 +30,6 @@ run = "docker compose exec app sh"
 postinstall = [
   "npm ci",
   "npx tsx 01-scripts/setup/index.ts",
+  "terraform -chdir=02-config/repo init",
   "lefthook install",
 ]
