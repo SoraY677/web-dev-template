@@ -33,5 +33,27 @@ resource "github_issue_labels" "this" {
   }
 }
 
+resource "github_repository" "this" {
+  name = var.github_repository
+
+  has_wiki               = false
+  has_issues             = true
+  has_discussions        = true
+  has_projects           = true
+
+  allow_merge_commit = false
+  allow_squash_merge = true
+  allow_rebase_merge = false
+  squash_merge_commit_title = "PR_TITLE"
+  squash_merge_commit_message = "BLANK"
+
+  allow_auto_merge = true
+  delete_branch_on_merge = true
+
+  lifecycle {
+    prevent_destroy = true
+  }
+}
+
 # 以下は別対応
 # - Projectsの作成
