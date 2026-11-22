@@ -32,3 +32,6 @@ resource "github_issue_labels" "this" {
     description = "設定変更・依存更新など"
   }
 }
+
+# 以下は別対応
+# - Projectsの作成

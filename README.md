@@ -25,18 +25,11 @@ mise install　
 
 <summary>初期化 (初回のみ)</summary>
 
-- 手順
-  - [GitHub > Settings > personal-access-tokens](https://github.com/settings/personal-access-tokens/new) から新規にトークン作成
-    - Expiration: 7days (作成時のみ使用予定)
-    - Repository access: `All repositories` or `Only select repositories`
-    - Permissions:
-      - [x] Issues
-
-
 - GitHubリポジトリの設定
 
 ```sh
 mise init
+# GitHub認証あり
 ```
 
 </details>
