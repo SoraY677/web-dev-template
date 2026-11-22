@@ -1,18 +1,10 @@
 import {execFileSync} from 'node:child_process';
 import {existsSync, readFileSync, writeFileSync} from 'node:fs';
 
+import {ensureGhLogin, getGhToken} from './gh.js';
+
 const ENV_PATH = '.env';
 const ENV_TEMPLATE_PATH = '.env.template';
-
-// 未ログインの場合はghのログインを対話的に実行する
-const ensureGhLogin = () => {
-  try {
-    execFileSync('gh', ['auth', 'status'], {stdio: 'ignore'});
-  } catch {
-    console.warn('gh is not logged in. starting login...');
-    execFileSync('gh', ['auth', 'login'], {stdio: 'inherit'});
-  }
-};
 
 // ghコマンドでオーナー名とリポジトリ名を取得する
 const getRepoInfo = () => {
@@ -36,6 +28,7 @@ const {owner, name} = getRepoInfo();
 const values: Record<string, string> = {
   GITHUB_OWNER: owner,
   GITHUB_REPOSITORY: name,
+  GITHUB_TOKEN: getGhToken(),
 };
 
 // ${XXX} 形式の変数を置換する（未定義の変数はそのまま残す）
