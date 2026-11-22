@@ -53,11 +53,18 @@ resource "github_repository" "this" {
   squash_merge_commit_message = "BLANK"
 
   allow_auto_merge = true
+  allow_update_branch = true
   delete_branch_on_merge = true
 
   lifecycle {
     prevent_destroy = true
   }
+}
+
+# 依存パッケージの脆弱性アラート
+resource "github_repository_vulnerability_alerts" "this" {
+  repository = github_repository.this.name
+  enabled    = true
 }
 
 # 以下は別対応
