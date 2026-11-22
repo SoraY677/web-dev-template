@@ -11,12 +11,10 @@ minimum_release_age = "7d" # サプライチェーン攻撃対策
 _.file = ".env"
 
 [tasks.init]
-dir = "02-config/repo"
-# terraformの変数(variables.tf)へ渡す
 env = {
   TF_VAR_github_owner = "{{ env.GITHUB_OWNER }}", TF_VAR_github_repository = "{{ env.GITHUB_REPOSITORY }}"
 }
-run = "terraform apply -auto-approve"
+run = "npx tsx 01-scripts/init/index.ts"
 
 [tasks.dev]
 run = "docker compose up -d --build --wait"

@@ -1,7 +1,6 @@
-import {execFileSync} from 'node:child_process';
 import {existsSync, readFileSync, writeFileSync} from 'node:fs';
 
-import {ensureGhLogin, getGhToken} from './gh.js';
+import {ensureGhLogin, gh} from '../utils/gh.js';
 
 const ENV_PATH = '.env';
 const ENV_TEMPLATE_PATH = '.env.template';
@@ -10,9 +9,7 @@ const ENV_TEMPLATE_PATH = '.env.template';
 const getRepoInfo = () => {
   ensureGhLogin();
 
-  const json = execFileSync('gh', ['repo', 'view', '--json', 'owner,name'], {
-    encoding: 'utf-8',
-  });
+  const json = gh(['repo', 'view', '--json', 'owner,name']);
   const {owner, name} = JSON.parse(json) as {owner: {login: string}; name: string};
   return {owner: owner.login, name};
 };
@@ -28,7 +25,6 @@ const {owner, name} = getRepoInfo();
 const values: Record<string, string> = {
   GITHUB_OWNER: owner,
   GITHUB_REPOSITORY: name,
-  GITHUB_TOKEN: getGhToken(),
 };
 
 // ${XXX} 形式の変数を置換する（未定義の変数はそのまま残す）
