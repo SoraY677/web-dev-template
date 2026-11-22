@@ -33,6 +33,11 @@ resource "github_issue_labels" "this" {
   }
 }
 
+resource "github_branch_default" "this" {
+  repository = github_repository.this.name
+  branch     = "develop"
+}
+
 resource "github_repository" "this" {
   name = var.github_repository
 
