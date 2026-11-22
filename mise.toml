@@ -2,6 +2,7 @@
 gh = "2.104.0"
 lefthook = "v2.1.17"
 node = "24.15.0"
+terraform = "1.14.8"
 
 [settings]
 minimum_release_age = "7d" # サプライチェーン攻撃対策
