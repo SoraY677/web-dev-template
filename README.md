@@ -21,6 +21,21 @@
 mise install　
 ```
 
+<details>
+
+<summary>初期化 (初回のみ)</summary>
+
+- GitHubリポジトリの設定
+
+```sh
+mise init
+# GitHub認証あり
+```
+
+</details>
+
+
+
 #### ローカルサーバ起動
 
 ```sh
